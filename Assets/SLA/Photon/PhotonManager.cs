@@ -210,14 +210,16 @@ namespace SLA
             var type = new TypedLobby();
             var option = new RoomOptions();
             option.maxPlayers = maxPlayers;
-            option.customRoomProperties = new ExitGames.Client.Photon.Hashtable(roomCondition.Count);
-            foreach(var it in roomCondition)
+            if (roomCondition != null)
             {
-                option.customRoomProperties.Add(it.Key, it.Value);
+                option.customRoomProperties = new ExitGames.Client.Photon.Hashtable(roomCondition.Count);
+                foreach(var it in roomCondition)
+                {
+                    option.customRoomProperties.Add(it.Key, it.Value);
+                }
+                option.customRoomPropertiesForLobby = new string[roomCondition.Count];
+                roomCondition.Keys.CopyTo(option.customRoomPropertiesForLobby, 0);
             }
-            option.customRoomPropertiesForLobby = new string[roomCondition.Count];
-            roomCondition.Keys.CopyTo(option.customRoomPropertiesForLobby, 0);
-            
             PhotonNetwork.CreateRoom(null, option, type);
         }
 
