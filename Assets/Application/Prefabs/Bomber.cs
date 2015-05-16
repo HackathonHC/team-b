@@ -43,7 +43,7 @@ namespace TB.Battles
             }
         }
 
-        void FixedUpdate()
+        void Update()
         {
             // controll
             if (GameData.Instance.playerType == PlayerType.Tetris)
