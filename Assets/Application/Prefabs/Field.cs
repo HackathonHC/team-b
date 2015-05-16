@@ -38,12 +38,16 @@ namespace TB.Battles
             }
             for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
             {
+                var emptyBlock = Random.Range(1, width + 1);
                 for(int j = 1; j <= width; j++)
                 {
-                    var place = new Point2(j, i);
-                    if(IsEmpty(place))
+                    if (j != emptyBlock)
                     {
-                        SetBlockAt(place, InstantiateNormalBlock().GetComponent<Block>());
+                        var place = new Point2(j, i);
+                        if(IsEmpty(place))
+                        {
+                            SetBlockAt(place, InstantiateNormalBlock().GetComponent<Block>());
+                        }
                     }
                 }
             }
