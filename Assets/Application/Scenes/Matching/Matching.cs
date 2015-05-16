@@ -10,7 +10,14 @@ namespace TB.Matchings
 
         void Start()
         {
-            ConnectAsHost();
+            if (MatchingParameter.Instance.playerType == PlayerType.Host)
+            {
+                ConnectAsHost();
+            }
+            else
+            {
+                ConnectAsGuest();
+            }
         }
 
         void ConnectAsHost()
