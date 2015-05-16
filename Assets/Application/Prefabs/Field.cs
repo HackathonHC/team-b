@@ -38,10 +38,11 @@ namespace TB.Battles
             }
             for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
             {
+                var blockExistences = GenerateBlockExisteces(width);
                 var emptyBlock = Random.Range(1, width + 1);
                 for(int j = 1; j <= width; j++)
                 {
-                    if (j != emptyBlock)
+                    if (blockExistences[j - 1])
                     {
                         var place = new Point2(j, i);
                         if(IsEmpty(place))
@@ -53,6 +54,20 @@ namespace TB.Battles
             }
 
             CurrentTopCenterPlace = new Point2(width / 2 + 1, 0);
+        }
+
+        static List<bool> GenerateBlockExisteces(int width)
+        {
+            int emptyBlockCount = Random.Range(1, width - 1) * Random.Range(1, width - 1) / (width - 2);
+            emptyBlockCount = Mathf.Max(1, emptyBlockCount);
+            emptyBlockCount = width - emptyBlockCount;
+            var blockExists = new List<bool>();
+            for(int k=0 ; k<width ; ++k)
+            {
+                blockExists.Add(k < emptyBlockCount);
+            }
+            SLA.RandomUtil.Shuffle<bool>(ref blockExists);
+            return blockExists;
         }
 
         static GameObject InstantiateWallBlock()
