@@ -34,6 +34,15 @@ namespace TB.Battles
         [SerializeField]
         Transform _flipper;
 
+        static Bomber _instance;
+        public static Bomber Instance
+        {
+            get
+            {
+                return _instance ?? (_instance = FindObjectOfType<Bomber>());
+            }
+        }
+
         void FixedUpdate()
         {
             // controll
