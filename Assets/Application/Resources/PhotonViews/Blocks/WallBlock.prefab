@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+  MaxLife: 1
 --- !u!212 &21241110
 SpriteRenderer:
   m_ObjectHideFlags: 1

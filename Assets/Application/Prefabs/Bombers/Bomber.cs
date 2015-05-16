@@ -133,7 +133,11 @@ namespace TB.Battles
             State = StateType.Digging;
             yield return new WaitForSeconds(DestroyBlockDelay);
             Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
-            Battle.Instance.DestroyBlock(target);
+            target.Life -= 1;
+            if (target.Life <= 0)
+            {
+                Battle.Instance.DestroyBlock(target);
+            }
             State = StateType.Active;
         }
 

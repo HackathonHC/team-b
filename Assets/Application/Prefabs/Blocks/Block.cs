@@ -9,6 +9,22 @@ namespace TB.Battles
     {
         public BlockType Type = BlockType.Normal;
         public Point2 Place {get; set;}
+
+        public int MaxLife; 
+
+        int _damageCount = 0;
+
+        public int Life
+        {
+            get
+            {
+                return MaxLife - _damageCount;
+            }
+            set
+            {
+                _damageCount = MaxLife - value;
+            }
+        }
     }
 
     public enum BlockType
@@ -17,3 +33,5 @@ namespace TB.Battles
         Wall,
     }
 }
+
+
