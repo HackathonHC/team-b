@@ -33,4 +33,7 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupTimes
   - TaggedPlayer
+  - DestroyRPC
+  - SendProperty
+  - SendQueue
   DisableAutoOpenWizard: 0
