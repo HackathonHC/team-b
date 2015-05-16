@@ -5,7 +5,12 @@ namespace TB
 {
     public enum PlayerType
     {
-        Host,
-        Guest,
+        Tetris,
+        Digger,
+    }
+
+    public enum PhotonEvent
+    {
+        DestroyBlock = 1,
     }
 }

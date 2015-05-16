@@ -25,10 +25,34 @@ namespace TB.Battles
 
         const float Velocity = 1f;
 
+        [SerializeField]
+        Transform _blaster;
+
+        [SerializeField]
+        Transform _bottomBlaster;
+
+        [SerializeField]
+        Transform _flipper;
+
         void FixedUpdate()
         {
-            var a = Input.GetAxis("Horizontal");
-            Rigidbody2D.AddForce(new Vector2(a, 0f), ForceMode2D.Impulse);
+            // controll
+            if (GameData.Instance.playerType == PlayerType.Tetris)
+            {
+                return;
+            }
+
+            var horizontalMove = Input.GetAxis("Horizontal");
+            Rigidbody2D.AddForce(new Vector2(horizontalMove, 0f), ForceMode2D.Impulse);
+
+            if (horizontalMove > 0.1f)
+            {
+                _flipper.localScale = new Vector3(-1f, _flipper.localScale.y, _flipper.localScale.z);
+            }
+            if (horizontalMove < -0.1f)
+            {
+                _flipper.localScale = new Vector3(1f, _flipper.localScale.y, _flipper.localScale.z);
+            }
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
@@ -40,7 +64,27 @@ namespace TB.Battles
 
             if (Input.GetKeyDown(KeyCode.X))
             {
-                // destroy block
+                Transform blaster;
+
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    blaster = _bottomBlaster;
+                }
+                else
+                {
+                    blaster = _blaster;
+                }
+
+                var col = Physics2D.OverlapPoint(blaster.position, 1 << Consts.BlockLayer);
+                if (col != null)
+                {
+                    var block = col.GetComponent<Block>();
+                    if (block.Type == BlockType.Normal)
+                    {
+                        Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
+                        Battle.Instance.DestroyBlock(block);
+                    }
+                }
             }
         }
     }
