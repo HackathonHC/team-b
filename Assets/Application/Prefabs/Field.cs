@@ -33,8 +33,8 @@ namespace TB.Battles
                 // Left
                 var leftPlace = new Point2(0, i);
                 var rightPlace = new Point2(width + 1, i);
-                SetBlockAt(leftPlace, InstantiateWallBlock().GetComponent<Block>());
-                SetBlockAt(rightPlace, InstantiateWallBlock().GetComponent<Block>());
+                CreateBlockAt(leftPlace, BlockType.Wall);
+                CreateBlockAt(rightPlace, BlockType.Wall);
             }
             for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
             {
@@ -47,7 +47,7 @@ namespace TB.Battles
                         var place = new Point2(j, i);
                         if(IsEmpty(place))
                         {
-                            SetBlockAt(place, InstantiateNormalBlock().GetComponent<Block>());
+                            CreateBlockAt(place, BlockType.Normal);
                         }
                     }
                 }
@@ -70,14 +70,14 @@ namespace TB.Battles
             return blockExists;
         }
 
-        static GameObject InstantiateWallBlock()
+        static GameObject InstantiateWallBlock(Vector3 position)
         {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", Vector3.zero, Quaternion.identity, 0);
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", position, Quaternion.identity, 0);
         }
         
-        static GameObject InstantiateNormalBlock()
+        static GameObject InstantiateNormalBlock(Vector3 position)
         {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", Vector3.zero, Quaternion.identity, 0);
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", position, Quaternion.identity, 0);
         }
 
         public Vector3 ComputePosition(Point2 place)
@@ -104,6 +104,20 @@ namespace TB.Battles
             else
             {
                 return null;
+            }
+        }
+
+        public void CreateBlockAt(Point2 place, BlockType type)
+        {
+            var position = ComputePosition(place);
+            switch(type)
+            {
+            case BlockType.Normal:
+                SetBlockAt(place, InstantiateNormalBlock(position).GetComponent<Block>());
+                break;
+            case BlockType.Wall:
+                SetBlockAt(place, InstantiateWallBlock(position).GetComponent<Block>());
+                break;
             }
         }
 
