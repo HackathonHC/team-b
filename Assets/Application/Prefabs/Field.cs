@@ -126,7 +126,7 @@ namespace TB.Battles
         {
             if(IsInField(place))
             {
-                Destroy(GetBlockAt(place).gameObject);
+                Battle.Instance.DestroyBlock(GetBlockAt(place));
                 SetBlockAt(place, null);
             }
         }
