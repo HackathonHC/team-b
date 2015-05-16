@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace TB.Battles
 {
-    public class Person : MonoBehaviour
+    public class Bomber : MonoBehaviour
     {
     }
 }
