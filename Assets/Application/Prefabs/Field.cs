@@ -39,7 +39,6 @@ namespace TB.Battles
             for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
             {
                 var blockExistences = GenerateBlockExisteces(width);
-                var emptyBlock = Random.Range(1, width + 1);
                 for(int j = 1; j <= width; j++)
                 {
                     if (blockExistences[j - 1])
