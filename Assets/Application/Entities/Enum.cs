@@ -12,5 +12,6 @@ namespace TB
     public enum PhotonEvent
     {
         DestroyBlock = 1,
+        DestroyItem = 2,
     }
 }

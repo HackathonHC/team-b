@@ -69,12 +69,13 @@ namespace TB.Battles
             {
                 return;
             }
+
+            Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
+
             if (State == StateType.Digging)
             {
                 return;
             }
-
-            Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
 
             var horizontalMove = Input.GetAxis("Horizontal");
             if (Mathf.Abs(horizontalMove) > 0.01f)
@@ -158,6 +159,16 @@ namespace TB.Battles
             {
                 // death
                 Debug.Log("digger died!");
+            }
+        }
+
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            var item = col.GetComponent<Item>();
+            if (item)
+            {
+                Battle.Instance.DestroyItem(item);
+                _remainingAir.Value = AirMax;
             }
         }
     }

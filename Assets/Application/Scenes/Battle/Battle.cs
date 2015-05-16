@@ -52,12 +52,27 @@ namespace TB.Battles
                     Destroy(view.gameObject);
                 }
             };
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyItem] = (values) => 
+            {
+                int viewID = global::System.Convert.ToInt32(values[0]);
+                var view = PhotonView.Find(viewID);
+                if (view)
+                {
+                    Destroy(view.gameObject);
+                }
+            };
         }
 
         public void DestroyBlock(Block block)
         {
             SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyBlock,
                                                            block.GetComponent<PhotonView>().viewID);
+        }
+
+        public void DestroyItem(Item item)
+        {
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyItem,
+                                                           item.GetComponent<PhotonView>().viewID);
         }
 
         public void SetAirGaugeValue(float v)
