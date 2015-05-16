@@ -36,7 +36,7 @@ namespace TB.Battles
                 var field = Instantiate(_fieldPrefab).GetComponent<Field>();
                 field.Initialize(10, 50, 5, 1);
                 var tetrisPlayer = Instantiate(_tetrisPlayerPrefab).GetComponent<TetrisPlayer>();
-                tetrisPlayer.Initialize(field, 5);
+                tetrisPlayer.Initialize(field, 1);
             }
 
             SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyBlock] = (values) => 

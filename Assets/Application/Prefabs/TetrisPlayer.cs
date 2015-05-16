@@ -8,6 +8,8 @@ namespace TB.Battles
 {
     public class TetrisPlayer : MonoBehaviour
     {
+        static readonly float moveDelay = 0.1f;
+
         static TetrisPlayer _instance;
         public static TetrisPlayer Instance
         {
@@ -27,6 +29,7 @@ namespace TB.Battles
         List<TetrisBlockType> tetrisBlockTypes;
         Point2 tetrisBlockPlace;
         float currentTime;
+        float currentMoveDelay;
         float speed;
 
         public void Initialize(Field field, float initialSpeed)
@@ -39,6 +42,8 @@ namespace TB.Battles
                 tetrisBlockTypes.Add((TetrisBlockType)type);
             }
             CreateTetrisBlock();
+            currentTime = 0;
+            currentMoveDelay = 0;
         }
 
         void CreateTetrisBlock()
@@ -56,13 +61,28 @@ namespace TB.Battles
 
         bool CanGoDown()
         {
+            return CanGoDireciton(new Point2(0, 1));
+        }
+
+        bool CanGoRight()
+        {
+            return CanGoDireciton(new Point2(1, 0));
+        }
+
+        bool CanGoLeft()
+        {
+            return CanGoDireciton(new Point2(-1, 0));
+        }
+
+        bool CanGoDireciton(Point2 direciton)
+        {
             var pivotPlace = TetrisBlock.PivotPlace();
             for(int i = 0; i < TetrisBlock.Size; i++)
             {
                 for(int j = 0; j < TetrisBlock.Size; j++)
                 {
                     var blockPlace = new Point2(j, i);
-                    var fieldPlace = tetrisBlockPlace - pivotPlace + new Point2(j, i + 1);
+                    var fieldPlace = tetrisBlockPlace - pivotPlace + new Point2(j, i) + direciton;
                     if(TetrisBlock.GetBlockAt(blockPlace) != null && field.GetBlockAt(fieldPlace) != null)
                     {
                         return false;
@@ -74,12 +94,76 @@ namespace TB.Battles
 
         void GoDown()
         {
-            tetrisBlockPlace += new Point2(0, 1);
+            GoDirection(new Point2(0, 1));
+        }
+
+        void GoRight()
+        {
+            GoDirection(new Point2(1, 0));
+        }
+
+        void GoLeft()
+        {
+            GoDirection(new Point2(-1, 0));
+        }
+
+        void GoDirection(Point2 direction)
+        {
+            tetrisBlockPlace += direction;
             TetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
+        }
+
+        void RotateLeft()
+        {
+            if(TetrisBlock.CanRotateLeft(field, tetrisBlockPlace))
+            {
+                TetrisBlock.RotateLeft();
+            }
+        }
+
+        void RotateRight()
+        {
+            if(TetrisBlock.CanRotateRight(field, tetrisBlockPlace))
+            {
+                TetrisBlock.RotateRight();
+            }
         }
 
         void Update()
         {
+            if(currentMoveDelay > 0)
+            {
+                currentMoveDelay -= Time.deltaTime;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    if(CanGoLeft())
+                    {
+                        GoLeft();
+                        currentMoveDelay = moveDelay;
+                    }
+                }
+                else if(Input.GetKey(KeyCode.RightArrow))
+                {
+                    if(CanGoRight())
+                    {
+                        GoRight();
+                        currentMoveDelay = moveDelay;
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                RotateLeft();
+            }
+            else if(Input.GetKeyDown(KeyCode.X))
+            {
+                RotateRight();
+            }
+
             currentTime += Time.deltaTime;
 
             if(currentTime > 1 / speed)
