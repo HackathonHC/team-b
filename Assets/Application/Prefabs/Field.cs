@@ -7,13 +7,6 @@ namespace TB.Battles
 {
     public class Field : MonoBehaviour
     {
-        [SerializeField]
-        Block
-            wallBlockPrefab;
-        [SerializeField]
-        Block
-            normalBlockPrefab;
-
         public int Width {get; private set;}
         public int Height {get; private set;}
         public float BlockUnit {get; private set;}
@@ -37,15 +30,25 @@ namespace TB.Battles
                 // Left
                 var leftPlace = new Point2(0, i);
                 var rightPlace = new Point2(width + 1, i);
-                SetBlockAt(leftPlace, Instantiate(wallBlockPrefab.gameObject).GetComponent<Block>());
-                SetBlockAt(rightPlace, Instantiate(wallBlockPrefab.gameObject).GetComponent<Block>());
+                SetBlockAt(leftPlace, InstantiateWallBlock().GetComponent<Block>());
+                SetBlockAt(rightPlace, InstantiateWallBlock().GetComponent<Block>());
             }
             for(int j = 0; j < width + 2; j++)
             {
                 // Bottom
                 var bottomPlace = new Point2(j, height + 1);
-                SetBlockAt(bottomPlace, Instantiate(normalBlockPrefab.gameObject).GetComponent<Block>());
+                SetBlockAt(bottomPlace, InstantiateNormalBlock().GetComponent<Block>());
             }
+        }
+
+        static GameObject InstantiateWallBlock()
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", Vector3.zero, Quaternion.identity, 0);
+        }
+        
+        static GameObject InstantiateNormalBlock()
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", Vector3.zero, Quaternion.identity, 0);
         }
 
         public Vector3 ComputePosition(Point2 place)

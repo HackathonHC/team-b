@@ -82,7 +82,7 @@ namespace TB.Battles
                     if (block.Type == BlockType.Normal)
                     {
                         Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
-                        Destroy(block.gameObject);
+                        Battle.Instance.DestroyBlock(block);
                     }
                 }
             }

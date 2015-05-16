@@ -38,6 +38,22 @@ namespace TB.Battles
 
             var fieldObject = Instantiate(_fieldPrefab) as GameObject;
             fieldObject.GetComponent<Field>().Initialize(10, 9, 1);
+
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyBlock] = (values) => 
+            {
+                int viewID = global::System.Convert.ToInt32(values[0]);
+                var view = PhotonView.Find(viewID);
+                if (view)
+                {
+                    Destroy(view.gameObject);
+                }
+            };
+        }
+
+        public void DestroyBlock(Block block)
+        {
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyBlock,
+                                                           block.GetComponent<PhotonView>().viewID);
         }
     }
 }

@@ -8,4 +8,9 @@ namespace TB
         Tetris,
         Digger,
     }
+
+    public enum PhotonEvent
+    {
+        DestroyBlock = 1,
+    }
 }
