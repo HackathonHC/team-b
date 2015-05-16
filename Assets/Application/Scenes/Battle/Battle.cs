@@ -19,6 +19,9 @@ namespace TB.Battles
         [SerializeField]
         GameObject _fieldPrefab;
 
+        [SerializeField]
+        Gauge _airGauge;
+
         void Start()
         {
             if (!PhotonNetwork.connected)
@@ -55,6 +58,11 @@ namespace TB.Battles
         {
             SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyBlock,
                                                            block.GetComponent<PhotonView>().viewID);
+        }
+
+        public void SetAirGaugeValue(float v)
+        {
+            _airGauge.SetValue(v);
         }
     }
 }

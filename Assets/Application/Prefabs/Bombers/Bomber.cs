@@ -43,6 +43,10 @@ namespace TB.Battles
 
         public StateType State {get; protected set;}
 
+        const float AirMax = 30f;
+
+        Air _remainingAir = new Air();
+
         static Bomber _instance;
         public static Bomber Instance
         {
@@ -55,6 +59,7 @@ namespace TB.Battles
         void Start()
         {
             State = StateType.Active;
+            _remainingAir.Value = AirMax;
         }
 
         void Update()
@@ -69,10 +74,14 @@ namespace TB.Battles
                 return;
             }
 
+            Debug.Log(_remainingAir.Value/ AirMax);
+            Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
+
             var horizontalMove = Input.GetAxis("Horizontal");
             if (Mathf.Abs(horizontalMove) > 0.01f)
             {
-                Rigidbody2D.AddForce(new Vector2(Mathf.Sign(horizontalMove), 0f) * 30f * Time.deltaTime, ForceMode2D.Impulse);
+                float force = (_remainingAir.Value > 0f) ? 30f : 15f;
+                Rigidbody2D.AddForce(new Vector2(Mathf.Sign(horizontalMove), 0f) * force * Time.deltaTime, ForceMode2D.Impulse);
             }
             if (horizontalMove > 0.1f)
             {
