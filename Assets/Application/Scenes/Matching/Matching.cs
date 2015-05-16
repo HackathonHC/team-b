@@ -5,6 +5,9 @@ namespace TB.Matchings
 {
     public class Matching : MonoBehaviour
     {
+        [SerializeField]
+        UnityEngine.UI.Text _log;
+
         void Start()
         {
             ConnectAsHost();
@@ -12,14 +15,18 @@ namespace TB.Matchings
 
         void ConnectAsHost()
         {
+            _log.text += "connecting photon as host...\n";
             SLA.PhotonManager.Instance.Connect((successConnecting) => {
                 if (!successConnecting)
                 {
                     Application.LoadLevel("Title");
                 }
+                _log.text += "connected\n";
+                _log.text += "creating room...\n";
                 SLA.PhotonManager.Instance.CreateRoom(null, 2, success => {
                     if (success)
                     {
+                        _log.text += "waiting for guest player...\n";
                         StartCoroutine(WaitForMatching());
                     }
                     else
@@ -31,20 +38,25 @@ namespace TB.Matchings
             });
         }
 
-        void ConnectAsClient()
+        void ConnectAsGuest()
         {
+            _log.text += "connecting photon as guest...\n";
             SLA.PhotonManager.Instance.Connect((successConnecting) => {
                 if (!successConnecting)
                 {
                     Application.LoadLevel("Title");
                 }
+                _log.text += "connected\n";
+                _log.text += "joining room...\n";
                 SLA.PhotonManager.Instance.JoinRoom(null, 30f, success => {
                     if (success)
                     {
+                        _log.text += "wait...\n";
                         StartCoroutine(WaitForMatching());
                     }
                     else
                     {
+                        SLA.PhotonManager.Instance.Disconnect(null);
                         Application.LoadLevel("Title");
                     }
                 });
