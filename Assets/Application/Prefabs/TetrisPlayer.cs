@@ -8,12 +8,22 @@ namespace TB.Battles
 {
     public class TetrisPlayer : MonoBehaviour
     {
+        static TetrisPlayer _instance;
+        public static TetrisPlayer Instance
+        {
+            get
+            {
+                return _instance ?? (_instance = FindObjectOfType<TetrisPlayer>());
+            }
+        }
+
         [SerializeField]
         TetrisBlock
             tetrisBlockPrefab;
 
+        public TetrisBlock TetrisBlock {get; private set;}
+
         Field field;
-        TetrisBlock tetrisBlock;
         List<TetrisBlockType> tetrisBlockTypes;
         Point2 tetrisBlockPlace;
         float currentTime;
@@ -33,10 +43,10 @@ namespace TB.Battles
 
         void CreateTetrisBlock()
         {
-            tetrisBlock = Instantiate(tetrisBlockPrefab.gameObject).GetComponent<TetrisBlock>();
-            tetrisBlock.Initialize(ChooseTetrisBlockType(), field.BlockUnit);
+            TetrisBlock = Instantiate(tetrisBlockPrefab.gameObject).GetComponent<TetrisBlock>();
+            TetrisBlock.Initialize(ChooseTetrisBlockType(), field.BlockUnit);
             tetrisBlockPlace = field.CurrentTopCenterPlace;
-            tetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
+            TetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
         }
 
         TetrisBlockType ChooseTetrisBlockType()
@@ -46,14 +56,14 @@ namespace TB.Battles
 
         bool CanGoDown()
         {
-            var pivotPlace = tetrisBlock.PivotPlace();
+            var pivotPlace = TetrisBlock.PivotPlace();
             for(int i = 0; i < TetrisBlock.Size; i++)
             {
                 for(int j = 0; j < TetrisBlock.Size; j++)
                 {
                     var blockPlace = new Point2(j, i);
                     var fieldPlace = tetrisBlockPlace - pivotPlace + new Point2(j, i + 1);
-                    if(tetrisBlock.GetBlockAt(blockPlace) != null && field.GetBlockAt(fieldPlace) != null)
+                    if(TetrisBlock.GetBlockAt(blockPlace) != null && field.GetBlockAt(fieldPlace) != null)
                     {
                         return false;
                     }
@@ -65,7 +75,7 @@ namespace TB.Battles
         void GoDown()
         {
             tetrisBlockPlace += new Point2(0, 1);
-            tetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
+            TetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
         }
 
         void Update()

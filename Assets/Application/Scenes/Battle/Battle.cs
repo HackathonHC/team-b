@@ -34,7 +34,7 @@ namespace TB.Battles
             if (GameData.Instance.playerType == PlayerType.Tetris || Consts.Standalone)
             {
                 var field = Instantiate(_fieldPrefab).GetComponent<Field>();
-                field.Initialize(10, 9, 1);
+                field.Initialize(10, 50, 5, 1);
                 var tetrisPlayer = Instantiate(_tetrisPlayerPrefab).GetComponent<TetrisPlayer>();
                 tetrisPlayer.Initialize(field, 5);
             }
