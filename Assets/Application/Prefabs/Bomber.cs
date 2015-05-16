@@ -36,6 +36,12 @@ namespace TB.Battles
 
         void FixedUpdate()
         {
+            // controll
+            if (MatchingParameter.Instance.playerType == PlayerType.Tetris)
+            {
+                return;
+            }
+
             var horizontalMove = Input.GetAxis("Horizontal");
             Rigidbody2D.AddForce(new Vector2(horizontalMove, 0f), ForceMode2D.Impulse);
 

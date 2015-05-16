@@ -5,7 +5,7 @@ namespace TB
 {
     public enum PlayerType
     {
-        Host,
-        Guest,
+        Tetris,
+        Digger,
     }
 }
