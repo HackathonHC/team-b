@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017dbef8b1f3748388a77f1c90e6c07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tetrisBlockPrefab: {fileID: 11436982, guid: 77a0b7e994d6c4dabab4cbcb44e2f1d6, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
