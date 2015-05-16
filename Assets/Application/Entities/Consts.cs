@@ -6,5 +6,6 @@ namespace TB
     static public class Consts
     {
         static public readonly int BlockLayer = LayerMask.NameToLayer("Block");
+        static public readonly bool Standalone = true;
     }
 }

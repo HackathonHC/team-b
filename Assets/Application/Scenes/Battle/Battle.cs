@@ -27,11 +27,11 @@ namespace TB.Battles
                 PhotonNetwork.CreateRoom("");
             }
 
-            if (GameData.Instance.playerType == PlayerType.Digger)
+            if (GameData.Instance.playerType == PlayerType.Digger || Consts.Standalone)
             {
                 PhotonNetwork.Instantiate("PhotonViews/Bomber", Vector3.zero, Quaternion.identity, 0);
             }
-            else
+            if (GameData.Instance.playerType == PlayerType.Tetris || Consts.Standalone)
             {
                 var field = Instantiate(_fieldPrefab).GetComponent<Field>();
                 field.Initialize(10, 9, 1);
