@@ -11,9 +11,12 @@ namespace TB.Battles
         J,
         L,
         O,
-        S,
+//        S,
         T,
-        Z,
+//        Z,
+        One,
+        Two,
+        Three,
     }
 
     public class TetrisBlock : MonoBehaviour
@@ -48,22 +51,40 @@ namespace TB.Battles
                 0,1,1,0,
                 0,0,0,0,
             });
-            blockDefinisions.Add(TetrisBlockType.S, new List<int>() {
-                0,0,0,0,
-                0,0,1,1,
-                0,1,1,0,
-                0,0,0,0,
-            });
+//            blockDefinisions.Add(TetrisBlockType.S, new List<int>() {
+//                0,0,0,0,
+//                0,0,1,1,
+//                0,1,1,0,
+//                0,0,0,0,
+//            });
             blockDefinisions.Add(TetrisBlockType.T, new List<int>() {
                 0,0,0,0,
                 0,1,1,1,
                 0,0,1,0,
                 0,0,0,0,
             });
-            blockDefinisions.Add(TetrisBlockType.Z, new List<int>() {
+//            blockDefinisions.Add(TetrisBlockType.Z, new List<int>() {
+//                0,0,0,0,
+//                0,1,1,0,
+//                0,0,1,1,
+//                0,0,0,0,
+//            });
+            blockDefinisions.Add(TetrisBlockType.One, new List<int>() {
                 0,0,0,0,
-                0,1,1,0,
-                0,0,1,1,
+                0,0,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+            blockDefinisions.Add(TetrisBlockType.Two, new List<int>() {
+                0,0,0,0,
+                0,0,1,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
+            blockDefinisions.Add(TetrisBlockType.Three, new List<int>() {
+                0,0,1,0,
+                0,0,1,0,
+                0,0,1,0,
                 0,0,0,0,
             });
         }
