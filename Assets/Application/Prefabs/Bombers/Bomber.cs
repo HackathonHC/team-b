@@ -93,24 +93,27 @@ namespace TB.Battles
 
             if (Input.GetKeyDown(KeyCode.X))
             {
-                Transform blaster;
+                if (BomberFoot.IsLanding)
+                {
+                    Transform blaster;
 
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
-                    blaster = _bottomBlaster;
-                }
-                else
-                {
-                    blaster = _blaster;
-                }
-
-                var col = Physics2D.OverlapPoint(blaster.position, 1 << Consts.BlockLayer);
-                if (col != null)
-                {
-                    var block = col.GetComponent<Block>();
-                    if (block.Type == BlockType.Normal)
+                    if (Input.GetKey(KeyCode.DownArrow))
                     {
-                        StartCoroutine(DestroyBlockCoroutine(block));
+                        blaster = _bottomBlaster;
+                    }
+                    else
+                    {
+                        blaster = _blaster;
+                    }
+
+                    var col = Physics2D.OverlapPoint(blaster.position, 1 << Consts.BlockLayer);
+                    if (col != null)
+                    {
+                        var block = col.GetComponent<Block>();
+                        if (block.Type == BlockType.Normal)
+                        {
+                            StartCoroutine(DestroyBlockCoroutine(block));
+                        }
                     }
                 }
             }
