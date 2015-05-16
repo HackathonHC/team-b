@@ -142,7 +142,6 @@ namespace TB.Battles
             {
                 yield break;
             }
-            Debug.Log(target.Type);
 
             Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
             target.Life -= 1;

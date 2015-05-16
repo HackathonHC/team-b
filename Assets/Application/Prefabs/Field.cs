@@ -46,7 +46,7 @@ namespace TB.Battles
                         var place = new Point2(j, i);
                         if(IsEmpty(place))
                         {
-                            CreateBlockAt(place, BlockType.Normal);
+                            CreateBlockAt(place, Consts.BlockSelector.Select());
                         }
                     }
                 }
