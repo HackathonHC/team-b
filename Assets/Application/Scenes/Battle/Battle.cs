@@ -27,12 +27,12 @@ namespace TB.Battles
                 PhotonNetwork.CreateRoom("");
             }
 
-            if (GameData.Instance.playerType == PlayerType.Digger || Consts.Standalone)
+            if (GameData.Instance.playerType == PlayerType.Digger || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
                 // FIXME: magic number position
                 PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 25.5f, 0f), Quaternion.identity, 0);
             }
-            if (GameData.Instance.playerType == PlayerType.Tetris || Consts.Standalone)
+            if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
                 var field = Instantiate(_fieldPrefab).GetComponent<Field>();
                 field.Initialize(10, 50, 10, 1);
