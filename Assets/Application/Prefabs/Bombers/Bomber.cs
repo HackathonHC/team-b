@@ -52,8 +52,10 @@ namespace TB.Battles
             }
 
             var horizontalMove = Input.GetAxis("Horizontal");
-            Rigidbody2D.AddForce(new Vector2(horizontalMove, 0f), ForceMode2D.Impulse);
-
+            if (Mathf.Abs(horizontalMove) > 0.01f)
+            {
+                Rigidbody2D.AddForce(new Vector2(Mathf.Sign(horizontalMove), 0f) * 30f * Time.deltaTime, ForceMode2D.Impulse);
+            }
             if (horizontalMove > 0.1f)
             {
                 _flipper.localScale = new Vector3(-1f, _flipper.localScale.y, _flipper.localScale.z);
@@ -67,7 +69,7 @@ namespace TB.Battles
             {
                 if (BomberFoot.IsLanding)
                 {
-                    Rigidbody2D.AddForce(new Vector2(0f, 8f), ForceMode2D.Impulse);
+                    Rigidbody2D.AddForce(new Vector2(0f, 12f), ForceMode2D.Impulse);
                 }
             }
 
