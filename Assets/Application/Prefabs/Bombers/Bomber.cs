@@ -5,6 +5,12 @@ namespace TB.Battles
 {
     public class Bomber : MonoBehaviour
     {
+        public enum StateType
+        {
+            Active = 1,
+            Digging = 2,
+        }
+
         Rigidbody2D _rigidbody2D;
         public Rigidbody2D Rigidbody2D
         {
@@ -24,6 +30,7 @@ namespace TB.Battles
         }
 
         const float Velocity = 1f;
+        const float DestroyBlockDelay = 1f;
 
         [SerializeField]
         Transform _blaster;
@@ -34,6 +41,8 @@ namespace TB.Battles
         [SerializeField]
         Transform _flipper;
 
+        public StateType State {get; protected set;}
+
         static Bomber _instance;
         public static Bomber Instance
         {
@@ -43,10 +52,19 @@ namespace TB.Battles
             }
         }
 
+        void Start()
+        {
+            State = StateType.Active;
+        }
+
         void Update()
         {
             // controll
             if (GameData.Instance.playerType == PlayerType.Tetris)
+            {
+                return;
+            }
+            if (State == StateType.Digging)
             {
                 return;
             }
@@ -92,12 +110,21 @@ namespace TB.Battles
                     var block = col.GetComponent<Block>();
                     if (block.Type == BlockType.Normal)
                     {
-                        Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
-                        Battle.Instance.DestroyBlock(block);
+                        StartCoroutine(DestroyBlockCoroutine(block));
                     }
                 }
             }
         }
+
+        IEnumerator DestroyBlockCoroutine(Block target)
+        {
+            State = StateType.Digging;
+            yield return new WaitForSeconds(DestroyBlockDelay);
+            Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
+            Battle.Instance.DestroyBlock(target);
+            State = StateType.Active;
+        }
+
         void OnCollisionStay2D(Collision2D col)
         {
             var trigger = col.collider.GetComponent<BlockAttackTrigger>();
