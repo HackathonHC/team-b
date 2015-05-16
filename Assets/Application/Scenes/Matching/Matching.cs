@@ -10,7 +10,7 @@ namespace TB.Matchings
 
         void Start()
         {
-            if (MatchingParameter.Instance.playerType == PlayerType.Tetris)
+            if (GameData.Instance.playerType == PlayerType.Tetris)
             {
                 ConnectAsHost();
             }

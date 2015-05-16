@@ -37,7 +37,7 @@ namespace TB.Battles
         void FixedUpdate()
         {
             // controll
-            if (MatchingParameter.Instance.playerType == PlayerType.Tetris)
+            if (GameData.Instance.playerType == PlayerType.Tetris)
             {
                 return;
             }
