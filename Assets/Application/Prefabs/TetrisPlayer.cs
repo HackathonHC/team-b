@@ -118,6 +118,13 @@ namespace TB.Battles
             if(TetrisBlock.CanRotateLeft(field, tetrisBlockPlace))
             {
                 TetrisBlock.RotateLeft();
+            } else {
+                int move = TetrisBlock.CanWallRotateLeft(field, tetrisBlockPlace);
+                Debug.Log("RotateLeft move:" + move);
+                if ( move != 0) {
+                    GoDirection(new Point2(move, 0));
+                    TetrisBlock.RotateLeft();
+                }
             }
         }
 
@@ -126,6 +133,12 @@ namespace TB.Battles
             if(TetrisBlock.CanRotateRight(field, tetrisBlockPlace))
             {
                 TetrisBlock.RotateRight();
+            } else {
+                int move = TetrisBlock.CanWallRotateRight(field, tetrisBlockPlace);
+                if ( move != 0) {
+                    GoDirection(new Point2(move, 0));
+                    TetrisBlock.RotateRight();
+                }
             }
         }
 

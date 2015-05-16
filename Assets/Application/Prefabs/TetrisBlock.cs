@@ -229,6 +229,76 @@ namespace TB.Battles
             return true;
         }
 
+        // 壁際チェック右回転
+        public int CanWallRotateRight(Field field, Point2 tetrisBlockPlace)
+        {
+            int move = 0;
+            // ブロック3個分までチェック
+            for (int k = 0; k < 3; k++) {
+                if (tetrisBlockPlace.x <= 5) {
+                    move++;
+                } else {
+                    move--;
+                }
+
+                bool hitFlg = false;
+                for(int i = 0; i < Size; i++)
+                {
+                    for(int j = 0; j < Size; j++)
+                    {
+                        var x = i;
+                        var y = Size - j - 1;
+                        x += move;
+                        var place = tetrisBlockPlace - PivotPlace() + new Point2(x, y);
+                        if(!field.IsEmpty(place))
+                        {
+                            hitFlg = true;
+                            break;
+                        }
+                    }
+                }
+                if (!hitFlg) {
+                    return move;
+                }
+            }
+            return 0;
+        }
+
+        // 壁際チェック左回転
+        public int CanWallRotateLeft(Field field, Point2 tetrisBlockPlace)
+        {
+            int move = 0;
+            // ブロック3個分までチェック
+            for (int k = 0; k < 3; k++) {
+                if (tetrisBlockPlace.x <= 5) {
+                    move++;
+                } else {
+                    move--;
+                }
+
+                bool hitFlg = false;
+                for(int i = 0; i < Size; i++)
+                {
+                    for(int j = 0; j < Size; j++)
+                    {
+                        var x = Size - i - 1;
+                        var y = j;
+                        x += move;
+                        var place = tetrisBlockPlace - PivotPlace() + new Point2(x, y);
+                        if(!field.IsEmpty(place))
+                        {
+                            hitFlg = true;
+                            break;
+                        }
+                    }
+                }
+                if (!hitFlg) {
+                    return move;
+                }
+            }
+            return 0;
+        }
+
         public void RotateLeft()
         {
             var tempBlocks = new List<Block>();
@@ -257,7 +327,7 @@ namespace TB.Battles
                     tempBlocks.Add(Blocks[y * Size + x]);
                 }
             }
-            
+
             UpdateBlocks(tempBlocks);
         }
 
