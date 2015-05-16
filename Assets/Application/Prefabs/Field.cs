@@ -17,6 +17,7 @@ namespace TB.Battles
         public int Width {get; private set;}
         public int Height {get; private set;}
         public float BlockUnit {get; private set;}
+        public Point2 CurrentTopCenterPlace {get; private set;}
 
         List<Block> blocks;
 
@@ -46,6 +47,8 @@ namespace TB.Battles
                 var bottomPlace = new Point2(j, height + 1);
                 SetBlockAt(bottomPlace, Instantiate(normalBlockPrefab.gameObject).GetComponent<Block>());
             }
+
+            CurrentTopCenterPlace = new Point2(width / 2 + 1, 0);
         }
 
         public Vector3 ComputePosition(Point2 place)
