@@ -13,5 +13,13 @@ namespace TB
                 return _instance ?? (_instance = Resources.Load<Resource>("Resource"));
             }
         }
+
+        [SerializeField]
+        GameObject _destroyBlockEffect;
+
+        public void CreateDestroyBlockEffect(Vector3 pos)
+        {
+            Instantiate(_destroyBlockEffect, pos, Quaternion.identity);
+        }
     }
 }

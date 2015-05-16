@@ -11,3 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b50bb5a735c943a497449591cbb6ad6, type: 3}
   m_Name: Resource
   m_EditorClassIdentifier: 
+  _destroyBlockEffect: {fileID: 169252, guid: 9fb4ec4b867214f329566d298e3cc1ff, type: 2}

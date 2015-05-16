@@ -25,6 +25,15 @@ namespace TB.Battles
 
         const float Velocity = 1f;
 
+        [SerializeField]
+        Transform _leftBlaster;
+
+        [SerializeField]
+        Transform _rightBlaster;
+
+        [SerializeField]
+        Transform _bottomBlaster;
+
         void FixedUpdate()
         {
             var a = Input.GetAxis("Horizontal");
@@ -41,6 +50,20 @@ namespace TB.Battles
             if (Input.GetKeyDown(KeyCode.X))
             {
                 // destroy block
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+//                    _bottomBlaster;
+                    var col = Physics2D.OverlapPoint(_bottomBlaster.position, 1 << Consts.BlockLayer);
+                    if (col != null)
+                    {
+                        var block = col.GetComponent<Block>();
+                        if (block.Type == BlockType.Normal)
+                        {
+                            Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
+                            Destroy(block.gameObject);
+                        }
+                    }
+                }
             }
         }
     }
