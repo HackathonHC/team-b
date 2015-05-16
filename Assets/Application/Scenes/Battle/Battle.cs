@@ -40,9 +40,6 @@ namespace TB.Battles
                 Instantiate(_tetrisPlayerPrefab);
             }
 
-            var fieldObject = Instantiate(_fieldPrefab) as GameObject;
-            fieldObject.GetComponent<Field>().Initialize(10, 9, 1);
-
             SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyBlock] = (values) => 
             {
                 int viewID = global::System.Convert.ToInt32(values[0]);
