@@ -18,14 +18,14 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &120594
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 422928}
   m_Layer: 0
-  m_Name: LeftBlaster
+  m_Name: Blaster
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -44,21 +44,6 @@ GameObject:
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &146744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 496568}
-  m_Layer: 0
-  m_Name: RightBlaster
-  m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -97,6 +82,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &196356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 407162}
+  m_Layer: 0
+  m_Name: Flipper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &197436
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +112,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &407162
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 422928}
+  m_Father: {fileID: 447836}
+  m_RootOrder: 0
 --- !u!4 &422220
 Transform:
   m_ObjectHideFlags: 1
@@ -123,7 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447836}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &422928
 Transform:
   m_ObjectHideFlags: 1
@@ -134,8 +147,8 @@ Transform:
   m_LocalPosition: {x: -.797999978, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 447836}
-  m_RootOrder: 3
+  m_Father: {fileID: 407162}
+  m_RootOrder: 0
 --- !u!4 &432974
 Transform:
   m_ObjectHideFlags: 1
@@ -147,7 +160,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447836}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &440838
 Transform:
   m_ObjectHideFlags: 1
@@ -159,7 +172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447836}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!4 &447836
 Transform:
   m_ObjectHideFlags: 1
@@ -170,11 +183,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 407162}
   - {fileID: 432974}
   - {fileID: 422220}
   - {fileID: 462460}
-  - {fileID: 422928}
-  - {fileID: 496568}
   - {fileID: 440838}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -189,19 +201,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447836}
-  m_RootOrder: 2
---- !u!4 &496568
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146744}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .797999978, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 447836}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!50 &5049362
 Rigidbody2D:
   m_ObjectHideFlags: 1
@@ -267,9 +267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f82d5cba01344f98970bf5fe98e4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftBlaster: {fileID: 422928}
-  _rightBlaster: {fileID: 496568}
+  _blaster: {fileID: 422928}
   _bottomBlaster: {fileID: 440838}
+  _flipper: {fileID: 407162}
 --- !u!114 &11453230
 MonoBehaviour:
   m_ObjectHideFlags: 1
