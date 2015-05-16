@@ -253,5 +253,21 @@ namespace TB.Battles
                 }
             }
         }
+
+        public void SettleDown(Field field, Point2 tetrisBlockPlace)
+        {
+            for(int i = 0; i < Size; i++)
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    var block = Blocks[i * Size + j];
+                    if(block != null)
+                    {
+                        var place = tetrisBlockPlace - PivotPlace() + new Point2(j, i);
+                        field.SetBlockAt(place, block);
+                    }
+                }
+            }
+        }
     }
 }

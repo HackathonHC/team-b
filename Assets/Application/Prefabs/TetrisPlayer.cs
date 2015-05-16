@@ -129,6 +129,13 @@ namespace TB.Battles
             }
         }
 
+        void SettleDown()
+        {
+            TetrisBlock.SettleDown(field, tetrisBlockPlace);
+            Destroy(TetrisBlock);
+            CreateTetrisBlock();
+        }
+
         void Update()
         {
             if(currentMoveDelay > 0)
@@ -153,6 +160,20 @@ namespace TB.Battles
                         currentMoveDelay = moveDelay;
                     }
                 }
+                else if(Input.GetKey(KeyCode.DownArrow))
+                {
+                    if(CanGoDown())
+                    {
+                        GoDown();
+                        currentMoveDelay = moveDelay;
+                    }
+                    else
+                    {
+                        SettleDown();
+                    }
+                    currentTime = 0f;
+                    return;
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -174,7 +195,7 @@ namespace TB.Battles
                 }
                 else
                 {
-
+                    SettleDown();
                 }
                 currentTime = 0f;
             }
