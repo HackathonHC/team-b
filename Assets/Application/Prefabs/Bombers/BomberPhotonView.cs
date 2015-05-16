@@ -15,6 +15,15 @@ namespace TB.Battles
             }
         }
 
+        PhotonView _photonView;
+        PhotonView PhotonView
+        {
+            get
+            {
+                return _photonView ?? (_photonView = GetComponent<PhotonView>());
+            }
+        }
+
         [global::System.Flags]
         public enum HeaderFlags
         {
@@ -23,6 +32,14 @@ namespace TB.Battles
         }
 
         Vector3 _servedPosition;
+
+        void Start()
+        {
+            if (!PhotonView.isMine)
+            {
+                Destroy(GetComponent<Rigidbody2D>());
+            }
+        }
 
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
