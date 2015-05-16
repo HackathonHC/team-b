@@ -339,6 +339,10 @@ namespace SLA
 
         static public bool ValidateConditions(Dictionary<string, object> conditions, Dictionary<object, object> properties)
         {
+            if (conditions == null)
+            {
+                return true;
+            }
             foreach(var it in conditions)
             {
                 object value = null;
