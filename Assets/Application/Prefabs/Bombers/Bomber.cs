@@ -74,7 +74,6 @@ namespace TB.Battles
                 return;
             }
 
-            Debug.Log(_remainingAir.Value/ AirMax);
             Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
 
             var horizontalMove = Input.GetAxis("Horizontal");
@@ -119,7 +118,7 @@ namespace TB.Battles
                     if (col != null)
                     {
                         var block = col.GetComponent<Block>();
-                        if (block.Type == BlockType.Normal)
+                        if (block.Type != BlockType.Wall)
                         {
                             StartCoroutine(DestroyBlockCoroutine(block));
                         }
@@ -132,13 +131,25 @@ namespace TB.Battles
         {
             State = StateType.Digging;
             yield return new WaitForSeconds(DestroyBlockDelay);
+
+            State = StateType.Active;
+
+            if (target.Type == BlockType.Wall)
+            {
+                yield break;
+            }
+            if (target.Type == BlockType.Unbreakable)
+            {
+                yield break;
+            }
+            Debug.Log(target.Type);
+
             Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
             target.Life -= 1;
             if (target.Life <= 0)
             {
                 Battle.Instance.DestroyBlock(target);
             }
-            State = StateType.Active;
         }
 
         void OnCollisionStay2D(Collision2D col)

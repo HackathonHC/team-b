@@ -69,16 +69,6 @@ namespace TB.Battles
             return blockExists;
         }
 
-        static GameObject InstantiateWallBlock(Vector3 position)
-        {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", position, Quaternion.identity, 0);
-        }
-        
-        static GameObject InstantiateNormalBlock(Vector3 position)
-        {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", position, Quaternion.identity, 0);
-        }
-
         public Vector3 ComputePosition(Point2 place)
         {
             return new Vector3(place.x - (float)Width / 2 - 0.5f, - (place.y - (float)TotalHeight / 2 - 0.5f), 0) * BlockUnit;
@@ -112,10 +102,19 @@ namespace TB.Battles
             switch(type)
             {
             case BlockType.Normal:
-                SetBlockAt(place, InstantiateNormalBlock(position).GetComponent<Block>());
+                SetBlockAt(place, Block.InstantiateNormalBlock(position).GetComponent<Block>());
                 break;
             case BlockType.Wall:
-                SetBlockAt(place, InstantiateWallBlock(position).GetComponent<Block>());
+                SetBlockAt(place, Block.InstantiateWallBlock(position).GetComponent<Block>());
+                break;
+            case BlockType.Unbreakable:
+                SetBlockAt(place, Block.InstantiateUnbreakableBlock(position).GetComponent<Block>());
+                break;
+            case BlockType.Hard:
+                SetBlockAt(place, Block.InstantiateHardBlock(position).GetComponent<Block>());
+                break;
+            default:
+                Debug.LogWarning("wrong block type!");
                 break;
             }
         }

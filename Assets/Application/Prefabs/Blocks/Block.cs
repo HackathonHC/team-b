@@ -25,12 +25,34 @@ namespace TB.Battles
                 _damageCount = MaxLife - value;
             }
         }
+
+        public static GameObject InstantiateWallBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", position, Quaternion.identity, 0);
+        }
+        
+        public static GameObject InstantiateNormalBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", position, Quaternion.identity, 0);
+        }
+        
+        public static GameObject InstantiateHardBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/HardBlock", position, Quaternion.identity, 0);
+        }
+
+        public static GameObject InstantiateUnbreakableBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/UnbreakableBlock", position, Quaternion.identity, 0);
+        }
     }
 
     public enum BlockType
     {
         Normal,
         Wall,
+        Unbreakable,
+        Hard,
     }
 }
 
