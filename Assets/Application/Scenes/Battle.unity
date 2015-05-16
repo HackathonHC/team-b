@@ -96,8 +96,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 131277280}
   - 20: {fileID: 131277279}
-  - 114: {fileID: 131277276}
   - 114: {fileID: 131277277}
+  - 114: {fileID: 131277276}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 131277275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebbcd38ec40fd43feb790dfadaf3a0af, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c54fe0a0a7054d72b4f4195389da003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &131277277
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 131277275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c54fe0a0a7054d72b4f4195389da003, type: 3}
+  m_Script: {fileID: 11500000, guid: ebbcd38ec40fd43feb790dfadaf3a0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!20 &131277279
@@ -169,6 +169,34 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 318284742}
+  m_RootOrder: 0
+--- !u!1 &318284741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 318284742}
+  m_Layer: 0
+  m_Name: CameraController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &318284742
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 318284741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 131277280}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1001 &450364859
@@ -617,6 +645,7 @@ MonoBehaviour:
   _tetrisPlayerPrefab: {fileID: 118880, guid: 96e30f3a9dd2845529eb8de161e837b7, type: 2}
   _fieldPrefab: {fileID: 152098, guid: 4d81938092abb4ecc8ffcd8d9a2d3128, type: 2}
   _airGauge: {fileID: 1768823731}
+  _cameraController: {fileID: 318284741}
 --- !u!4 &1820586297
 Transform:
   m_ObjectHideFlags: 0

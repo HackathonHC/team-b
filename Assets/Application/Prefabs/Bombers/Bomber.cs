@@ -132,6 +132,7 @@ namespace TB.Battles
         {
             State = StateType.Digging;
             Resource.Instance.CreateSparksEffect(effectPosition);
+            Battle.Instance.ShakeCamera(0.1f, DestroyBlockDelay);
             yield return new WaitForSeconds(DestroyBlockDelay);
 
             State = StateType.Active;
@@ -150,6 +151,7 @@ namespace TB.Battles
             if (target.Life <= 0)
             {
                 Battle.Instance.DestroyBlock(target);
+                Battle.Instance.ShakeCamera(0.25f, 0.5f);
             }
         }
 

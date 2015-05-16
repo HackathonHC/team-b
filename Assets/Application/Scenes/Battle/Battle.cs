@@ -22,6 +22,9 @@ namespace TB.Battles
         [SerializeField]
         Gauge _airGauge;
 
+        [SerializeField]
+        GameObject _cameraController;
+
         void Start()
         {
             if (!PhotonNetwork.connected)
@@ -78,6 +81,11 @@ namespace TB.Battles
         public void SetAirGaugeValue(float v)
         {
             _airGauge.SetValue(v);
+        }
+
+        public void ShakeCamera(float amount, float duration)
+        {
+            iTween.ShakePosition(_cameraController, Vector3.one * amount, duration);
         }
     }
 }
