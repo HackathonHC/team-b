@@ -7,13 +7,13 @@ namespace TB.Titles
     {
         public void OnClickStartDrillerModeButton()
         {
-            MatchingParameter.Instance.playerType = PlayerType.Digger;
+            GameData.Instance.playerType = PlayerType.Digger;
             Application.LoadLevel("Matching");
         }
 
         public void OnClickStartTetrisModeButton()
         {
-            MatchingParameter.Instance.playerType = PlayerType.Tetris;
+            GameData.Instance.playerType = PlayerType.Tetris;
             Application.LoadLevel("Matching");
         }
     }

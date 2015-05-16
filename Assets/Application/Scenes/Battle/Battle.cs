@@ -5,8 +5,13 @@ namespace TB.Battles
 {
     public class Battle : MonoBehaviour
     {
-        [SerializeField]
-        GameObject _personPrefab;
+        static Battle _instance;
+        static public Battle Instance{
+            get
+            {
+                return _instance ?? (_instance = FindObjectOfType<Battle>());
+            }
+        }
 
         [SerializeField]
         GameObject _tetrisPlayerPrefab;
@@ -16,8 +21,21 @@ namespace TB.Battles
 
         void Start()
         {
-            Instantiate(_personPrefab);
-            Instantiate(_tetrisPlayerPrefab);
+            if (!PhotonNetwork.connected)
+            {
+                PhotonNetwork.offlineMode = true;
+                PhotonNetwork.CreateRoom("");
+            }
+
+            if (GameData.Instance.playerType == PlayerType.Digger)
+            {
+                PhotonNetwork.Instantiate("PhotonViews/Bomber", Vector3.zero, Quaternion.identity, 0);
+            }
+            else
+            {
+                Instantiate(_tetrisPlayerPrefab);
+            }
+
             var fieldObject = Instantiate(_fieldPrefab) as GameObject;
             fieldObject.GetComponent<Field>().Initialize(10, 9, 1);
         }
