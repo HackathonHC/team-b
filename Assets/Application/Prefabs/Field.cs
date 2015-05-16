@@ -92,7 +92,9 @@ namespace TB.Battles
         {
             if(IsInField(place))
             {
+                block.transform.parent = this.transform;
                 block.transform.localPosition = ComputePosition(place);
+                block.transform.localScale = Vector3.one;
                 block.Place = place;
                 blocks[place.y * (Width + 2) + place.x] = block;
             }

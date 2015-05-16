@@ -18,7 +18,7 @@ namespace TB.Battles
         void LateUpdate()
         {
             var position = TetrisPlayer.Instance.TetrisBlock.transform.position + new Vector3(0, Offset, 0);
-            transform.position = new Vector3(position.x, position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x, position.y, transform.position.z);
         }
     }
 }
