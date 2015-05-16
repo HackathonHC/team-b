@@ -98,5 +98,14 @@ namespace TB.Battles
                 }
             }
         }
+        void OnCollisionStay2D(Collision2D col)
+        {
+            var trigger = col.collider.GetComponent<BlockAttackTrigger>();
+            if (trigger && trigger.Attacking)
+            {
+                // death
+                Debug.Log("digger died!");
+            }
+        }
     }
 }
