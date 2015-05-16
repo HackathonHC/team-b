@@ -33,6 +33,10 @@ namespace TB.Battles
             }
             else
             {
+                var field = Instantiate(_fieldPrefab).GetComponent<Field>();
+                field.Initialize(10, 9, 1);
+                var tetrisPlayer = Instantiate(_tetrisPlayerPrefab).GetComponent<TetrisPlayer>();
+                tetrisPlayer.Initialize(field, 5);
                 Instantiate(_tetrisPlayerPrefab);
             }
 
