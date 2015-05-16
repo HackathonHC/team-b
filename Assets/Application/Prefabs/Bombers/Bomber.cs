@@ -121,16 +121,17 @@ namespace TB.Battles
                         var block = col.GetComponent<Block>();
                         if (block.Type != BlockType.Wall)
                         {
-                            StartCoroutine(DestroyBlockCoroutine(block));
+                            StartCoroutine(DestroyBlockCoroutine(blaster.position, block));
                         }
                     }
                 }
             }
         }
 
-        IEnumerator DestroyBlockCoroutine(Block target)
+        IEnumerator DestroyBlockCoroutine(Vector3 effectPosition, Block target)
         {
             State = StateType.Digging;
+            Resource.Instance.CreateSparksEffect(effectPosition);
             yield return new WaitForSeconds(DestroyBlockDelay);
 
             State = StateType.Active;
@@ -144,7 +145,7 @@ namespace TB.Battles
                 yield break;
             }
 
-            Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
+            Resource.Instance.CreateDestroyBlockEffect(effectPosition);
             target.Life -= 1;
             if (target.Life <= 0)
             {

@@ -17,9 +17,16 @@ namespace TB
         [SerializeField]
         GameObject _destroyBlockEffect;
 
+        [SerializeField]
+        GameObject _sparksEffectPrefab;
+
         public void CreateDestroyBlockEffect(Vector3 pos)
         {
             Instantiate(_destroyBlockEffect, pos, Quaternion.identity);
+        }
+        public void CreateSparksEffect(Vector3 pos)
+        {
+            Instantiate(_sparksEffectPrefab, pos, Quaternion.identity);
         }
     }
 }
