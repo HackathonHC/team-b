@@ -133,6 +133,30 @@ namespace TB.Battles
         {
             TetrisBlock.SettleDown(field, tetrisBlockPlace);
             Destroy(TetrisBlock);
+
+            var blocks = field.FindFilledRowBlocks();
+            if(blocks.Count > 0)
+            {
+                var removedRowHeights = new List<int>();
+                foreach(var block in blocks)
+                {
+                    if(!removedRowHeights.Contains(block.Place.y))
+                    {
+                        removedRowHeights.Add(block.Place.y);
+                    }
+                }
+
+                foreach(var block in blocks)
+                {
+                    field.RemoveBlockAt(block.Place);
+                }
+
+                foreach(var height in removedRowHeights)
+                {
+                    field.RemoveRow(height);
+                }
+            }
+
             CreateTetrisBlock();
         }
 

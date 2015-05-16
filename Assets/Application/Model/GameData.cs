@@ -14,7 +14,7 @@ namespace TB
             }
         }
 
-        public PlayerType playerType;
+        public PlayerType playerType = PlayerType.Tetris;
 
         GameData()
         {

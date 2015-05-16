@@ -96,11 +96,62 @@ namespace TB.Battles
         {
             if(IsInField(place))
             {
-                block.transform.parent = this.transform;
-                block.transform.localPosition = ComputePosition(place);
-                block.transform.localScale = Vector3.one;
-                block.Place = place;
+                if(block != null)
+                {
+                    block.transform.parent = this.transform;
+                    block.transform.localPosition = ComputePosition(place);
+                    block.transform.localScale = Vector3.one;
+                    block.Place = place;
+                }
                 blocks[place.y * (Width + 2) + place.x] = block;
+            }
+        }
+
+        public void RemoveBlockAt(Point2 place)
+        {
+            if(IsInField(place))
+            {
+                Destroy(GetBlockAt(place).gameObject);
+                SetBlockAt(place, null);
+            }
+        }
+
+        public List<Block> FindFilledRowBlocks()
+        {
+            var blocks = new List<Block>();
+            for(int i = 1; i <= TotalHeight; i++)
+            {
+                if(IsFilledRow(i))
+                {
+                    for(int j = 1; j <= Width; j++)
+                    {
+                        blocks.Add(GetBlockAt(new Point2(j, i)));
+                    }
+                }
+            }
+            return blocks;
+        }
+
+        bool IsFilledRow(int height)
+        {
+            for(int j = 1; j <= Width; j++)
+            {
+                if(IsEmpty(new Point2(j, height)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void RemoveRow(int height)
+        {
+            for(int i = height - 1; i > 0; i--)
+            {
+                for(int j = 1; j <= Width; j++)
+                {
+                    SetBlockAt(new Point2(j, i + 1), GetBlockAt(new Point2(j, i)));
+                }
             }
         }
     }
