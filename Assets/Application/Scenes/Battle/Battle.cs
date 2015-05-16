@@ -29,7 +29,8 @@ namespace TB.Battles
 
             if (GameData.Instance.playerType == PlayerType.Digger || Consts.Standalone)
             {
-                PhotonNetwork.Instantiate("PhotonViews/Bomber", Vector3.zero, Quaternion.identity, 0);
+                // FIXME: magic number position
+                PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 25.5f, 0f), Quaternion.identity, 0);
             }
             if (GameData.Instance.playerType == PlayerType.Tetris || Consts.Standalone)
             {
