@@ -171,5 +171,87 @@ namespace TB.Battles
         {
             return Blocks[place.y * Size + place.x];
         }
+
+        public bool CanRotateLeft(Field field, Point2 tetrisBlockPlace)
+        {
+            for(int i = 0; i < Size; i++)
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    var x = Size - i - 1;
+                    var y = j;
+                    var place = tetrisBlockPlace - PivotPlace() + new Point2(x, y);
+                    if(!field.IsEmpty(place))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool CanRotateRight(Field field, Point2 tetrisBlockPlace)
+        {
+            for(int i = 0; i < Size; i++)
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    var x = i;
+                    var y = Size - j - 1;
+                    var place = tetrisBlockPlace - PivotPlace() + new Point2(x, y);
+                    if(!field.IsEmpty(place))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void RotateLeft()
+        {
+            var tempBlocks = new List<Block>();
+            for(int i = 0; i < Size; i++)
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    var x = Size - i - 1;
+                    var y = j;
+                    tempBlocks.Add(Blocks[y * Size + x]);
+                }
+            }
+
+            UpdateBlocks(tempBlocks);
+        }
+
+        public void RotateRight()
+        {
+            var tempBlocks = new List<Block>();
+            for(int i = 0; i < Size; i++)
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    var x = i;
+                    var y = Size - j - 1;
+                    tempBlocks.Add(Blocks[y * Size + x]);
+                }
+            }
+            
+            UpdateBlocks(tempBlocks);
+        }
+
+        void UpdateBlocks(List<Block> newBlocks)
+        {
+            for(int i = 0; i < newBlocks.Count; i++)
+            {
+                Blocks[i] = newBlocks[i];
+                if(Blocks[i] != null)
+                {
+                    var place = new Point2(i % Size, i / Size);
+                    Blocks[i].Place = place;
+                    Blocks[i].transform.localPosition = ComputePosition(place);
+                }
+            }
+        }
     }
 }
