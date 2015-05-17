@@ -107,9 +107,9 @@ MonoBehaviour:
   Type: 2
   MaxLife: 2
   _sprites:
-  - {fileID: 21300000, guid: d513aa50a99984426b2b7d8f0848101c, type: 3}
-  - {fileID: 21300000, guid: cc352cf435a2447d8bb47ef4fdee90e5, type: 3}
-  - {fileID: 21300000, guid: b4d06ab11475145ffbedd0faf441a832, type: 3}
+  - {fileID: 21300000, guid: c6a844b39a5154ef9935265d91a97102, type: 3}
+  - {fileID: 21300000, guid: c6a844b39a5154ef9935265d91a97102, type: 3}
+  - {fileID: 21300000, guid: c6a844b39a5154ef9935265d91a97102, type: 3}
 --- !u!212 &21241110
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,8 +134,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d513aa50a99984426b2b7d8f0848101c, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c6a844b39a5154ef9935265d91a97102, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
