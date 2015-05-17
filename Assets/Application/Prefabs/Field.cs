@@ -288,10 +288,10 @@ namespace TB.Battles
             return default(Point2);
         }
 
-        public List<int> FindExtraRemovedRowHeights(int removedRowsCount)
+        public List<int> FindExtraRemovedRowHeights(int removedRowsCount, int bottomRemovedRowDepth)
         {
             var extraRowHeights = new List<int>();
-            for(int i = 0; i < TotalHeight + 2; i++)
+            for(int i = bottomRemovedRowDepth + 1; i <= TotalHeight; i++)
             {
                 for(int j = 1; j <= Width; j++)
                 {
