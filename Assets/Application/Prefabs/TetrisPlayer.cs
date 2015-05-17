@@ -180,9 +180,26 @@ namespace TB.Battles
                     }
                 }
 
-                // remove the same number of rows as fillded rows.
-                var extraRemovedRowHeights = field.FindExtraRemovedRowHeights(removedRowHeights.Count);
+                var bottomRemovedRowHeight = 0;
+                foreach(int height in removedRowHeights)
+                {
+                    if(height > bottomRemovedRowHeight)
+                    {
+                        bottomRemovedRowHeight = height;
+                    }
+                }
+
+                var extraRemovedRowHeights = field.FindExtraRemovedRowHeights(removedRowHeights.Count, bottomRemovedRowHeight);
                 extraRemovedRowHeights.RemoveAll((_height) => removedRowHeights.Contains(_height));
+
+                foreach(var block in blocks)
+                {
+                    field.RemoveBlockAt(block.Place);
+                }
+                foreach(var height in removedRowHeights)
+                {
+                    field.RemoveRow(height);
+                }
 
                 var extraRemovedBlocks = new List<Block>();
                 foreach(var height in extraRemovedRowHeights)
@@ -194,15 +211,6 @@ namespace TB.Battles
                     field.RemoveBlockAt(block.Place);
                 }
                 foreach(var height in extraRemovedRowHeights)
-                {
-                    field.RemoveRow(height);
-                }
-
-                foreach(var block in blocks)
-                {
-                    field.RemoveBlockAt(block.Place);
-                }
-                foreach(var height in removedRowHeights)
                 {
                     field.RemoveRow(height);
                 }
