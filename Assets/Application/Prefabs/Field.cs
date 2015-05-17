@@ -157,7 +157,7 @@ namespace TB.Battles
             {
                 blockExists.Add(false);
             }
-            if(depth % 3 == 0)
+            if(depth > 0 && depth % 10 == 0)
             {
                 int blocksCount = 0;
                 foreach(var exist in blockExistences)
