@@ -287,6 +287,43 @@ namespace TB.Battles
             }
             return default(Point2);
         }
+
+        public List<int> FindExtraRemovedRowHeights(int removedRowsCount)
+        {
+            var extraRowHeights = new List<int>();
+            for(int i = 0; i < TotalHeight + 2; i++)
+            {
+                for(int j = 1; j <= Width; j++)
+                {
+                    var place = new Point2(j, i);
+                    if(!IsEmpty(place))
+                    {
+                        extraRowHeights.Add(i);
+                        break;
+                    }
+                }
+
+                if(extraRowHeights.Count == removedRowsCount)
+                {
+                    break;
+                }
+            }
+            return extraRowHeights;
+        }
+
+        public List<Block> GetBlocksAtRow(int depth)
+        {
+            var blocks = new List<Block>();
+            for(int j = 1; j <= Width; j++)
+            {
+                var place = new Point2(j, depth);
+                if(!IsEmpty(place))
+                {
+                    blocks.Add(GetBlockAt(new Point2(j, depth)));
+                }
+            }
+            return blocks;
+        }
     }
 }
-
+    
