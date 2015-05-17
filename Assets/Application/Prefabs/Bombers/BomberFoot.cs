@@ -18,6 +18,11 @@ namespace TB.Battles
         void OnTriggerEnter2D(Collider2D col)
         {
             nextState = true;
+
+            if (col.tag == "BottomBlock")
+            {
+                Battle.Instance.TryOver(ResultType.DiggerWin);
+            }
         }
 
         void OnTriggerStay2D(Collider2D col)

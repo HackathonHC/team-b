@@ -50,7 +50,11 @@ namespace TB.Battles
         {
             return PhotonNetwork.Instantiate("PhotonViews/Blocks/WallBlock", position, Quaternion.identity, 0);
         }
-        
+        public static GameObject InstantiateBottomBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/BottomBlock", position, Quaternion.identity, 0);
+        }
+
         public static GameObject InstantiateNormalBlock(Vector3 position)
         {
             return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", position, Quaternion.identity, 0);
@@ -79,6 +83,7 @@ namespace TB.Battles
         Unbreakable,
         Hard,
         Bomb,
+        Bottom,
     }
 }
 
