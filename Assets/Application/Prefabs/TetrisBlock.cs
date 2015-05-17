@@ -17,6 +17,7 @@ namespace TB.Battles
         One,
         Two,
         Three,
+        Bomb,
     }
 
     public class TetrisBlock : MonoBehaviour
@@ -87,8 +88,14 @@ namespace TB.Battles
                 0,1,1,0,
                 0,0,0,0,
             });
+            blockDefinisions.Add(TetrisBlockType.Bomb, new List<int>() {
+                0,0,0,0,
+                0,0,0,0,
+                0,0,1,0,
+                0,0,0,0,
+            });
         }
-
+        
         public List<Block> Blocks { get; private set; }
         float blockUnit;
 
@@ -105,9 +112,10 @@ namespace TB.Battles
                     if(definistion[i * Size + j] == 1)
                     {
                         var place = new Point2(j, i);
-                        var block = InstantiateTetrisBlock().GetComponent<Block>();
+                        var position = ComputePosition(place);
+                        var block = InstantiateTetrisBlock(position, type).GetComponent<Block>();
                         block.transform.parent = this.transform;
-                        block.transform.localPosition = ComputePosition(place);
+                        block.transform.localPosition = position;
                         block.transform.localScale = Vector3.one;
                         block.Place = place;
                         Blocks.Add(block);
@@ -120,9 +128,16 @@ namespace TB.Battles
             }
         }
 
-        static GameObject InstantiateTetrisBlock()
+        static GameObject InstantiateTetrisBlock(Vector3 position, TetrisBlockType type)
         {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/TetrisBlock", Vector3.zero, Quaternion.identity, 0);
+            if(type == TetrisBlockType.Bomb)
+            {
+                return PhotonNetwork.Instantiate("PhotonViews/Blocks/BombTetrisBlock", position, Quaternion.identity, 0);
+            }
+            else
+            {
+                return PhotonNetwork.Instantiate("PhotonViews/Blocks/TetrisBlock", position, Quaternion.identity, 0);
+            }
         }
 
         public Point2 PivotPlace()
