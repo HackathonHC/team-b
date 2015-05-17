@@ -271,6 +271,22 @@ namespace TB.Battles
                 }
             }
         }
+
+        public Point2 FindTopBlockPlace()
+        {
+            for(int i = 0; i < TotalHeight + 2; i++)
+            {
+                for(int j = 1; j <= Width; j++)
+                {
+                    var place = new Point2(j, i);
+                    if(!IsEmpty(place))
+                    {
+                        return place;
+                    }
+                }
+            }
+            return default(Point2);
+        }
     }
 }
 

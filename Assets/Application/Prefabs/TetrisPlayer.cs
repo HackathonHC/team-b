@@ -9,6 +9,7 @@ namespace TB.Battles
     public class TetrisPlayer : MonoBehaviour
     {
         static readonly float moveDelay = 0.1f;
+        static readonly int createBlockOffset = 4;
 
         static TetrisPlayer _instance;
         public static TetrisPlayer Instance
@@ -41,17 +42,37 @@ namespace TB.Battles
             {
                 tetrisBlockTypes.Add((TetrisBlockType)type);
             }
-            CreateTetrisBlock();
+            CreateTetrisBlock(true);
             currentTime = 0;
             currentMoveDelay = 0;
         }
 
-        void CreateTetrisBlock()
+        void CreateTetrisBlock(bool firstTime = false)
         {
             TetrisBlock = Instantiate(tetrisBlockPrefab.gameObject).GetComponent<TetrisBlock>();
             TetrisBlock.Initialize(ChooseTetrisBlockType(), Field.BlockUnit);
-            tetrisBlockPlace = field.CurrentTopCenterPlace;
+            if(firstTime)
+            {
+                tetrisBlockPlace = field.CurrentTopCenterPlace;
+            }
+            else
+            {
+                tetrisBlockPlace = new Point2(field.CurrentTopCenterPlace.x, field.FindTopBlockPlace().y - createBlockOffset);
+                Debug.Log("tetrisBlockPlace: " + tetrisBlockPlace);
+            }
             TetrisBlock.transform.localPosition = Field.ComputePosition(tetrisBlockPlace);
+        }
+
+        bool CanCreateTetrisBlock()
+        {
+            for(int j = 1; j <= Field.Width; j++)
+            {
+                if(!field.IsEmpty(new Point2(j, 0)))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         TetrisBlockType ChooseTetrisBlockType()
@@ -170,11 +191,29 @@ namespace TB.Battles
                 }
             }
 
-            CreateTetrisBlock();
+            if(CanCreateTetrisBlock())
+            {
+                CreateTetrisBlock();
+            }
+            else
+            {
+                Battle.Instance.TryOver(ResultType.DiggerWin);
+            }
         }
 
         void Update()
         {
+            // controll
+            if (GameData.Instance.playerType == PlayerType.Digger)
+            {
+                return;
+            }
+
+            if(Battle.Instance.IsOver)
+            {
+                return;
+            }
+
             if(currentMoveDelay > 0)
             {
                 currentMoveDelay -= Time.deltaTime;
