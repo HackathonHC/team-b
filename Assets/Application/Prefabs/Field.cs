@@ -11,6 +11,7 @@ namespace TB.Battles
         public const int TotalHeight = 50;
         public const int TopSpaceHeight = 10;
         public const float BlockUnit = 1f;
+        public const int BombRemoveBlockSize = 5;
         public Point2 CurrentTopCenterPlace {get; private set;}
 
         List<Block> blocks;
@@ -35,6 +36,8 @@ namespace TB.Battles
             {
                 var blockExistences = GenerateBlockExisteces(Width);
                 var unbreakableBlockExistences = GenerateUnbreakableBlockExistences(Width, i, blockExistences);
+                var bombBlockExistences = GenerateBombBlockExistences(Width, i, blockExistences);
+
                 var selector = GenerateBlockSelector(i);
                 for(int j = 1; j <= Width; j++)
                 {
@@ -43,7 +46,11 @@ namespace TB.Battles
                     {
                         if(IsEmpty(place))
                         {
-                            if(unbreakableBlockExistences[j - 1])
+                            if(bombBlockExistences[j - 1])
+                            {
+                                CreateBlockAt(place, BlockType.Bomb);
+                            }
+                            else if(unbreakableBlockExistences[j - 1])
                             {
                                 CreateBlockAt(place, BlockType.Unbreakable);
                             }
@@ -99,7 +106,7 @@ namespace TB.Battles
             {
                 blockExists.Add(false);
             }
-            if(depth < TotalHeight / 2 || depth % 2 == 0)
+            if(depth < TotalHeight / 2 || depth % 2 == 1)
             {
                 return blockExists;
             }
@@ -138,6 +145,43 @@ namespace TB.Battles
                 for(int i = 0; i < unbreakableCount; i++)
                 {
                     blockExists[width - i - 1] = true;
+                }
+            }
+            return blockExists;
+        }
+
+        List<bool> GenerateBombBlockExistences(int width, int depth, List<bool> blockExistences)
+        {
+            var blockExists = new List<bool>();
+            for(int i = 0; i < width; i++)
+            {
+                blockExists.Add(false);
+            }
+            if(depth % 3 == 0)
+            {
+                int blocksCount = 0;
+                foreach(var exist in blockExistences)
+                {
+                    if(exist)
+                    {
+                        blocksCount += 1;
+                    }
+                }
+
+                var blockIndex = Random.Range(0, blocksCount - 1);
+                int index = 0;
+                for(int i = 0; i < width; i++)
+                {
+                    if(blockExistences[i])
+                    {
+                        if(index == blockIndex)
+                        {
+                            blockExists[i] = true;
+                            break;
+                        }
+                        
+                        index += 1;
+                    }
                 }
             }
             return blockExists;
@@ -202,6 +246,9 @@ namespace TB.Battles
                 break;
             case BlockType.Hard:
                 SetBlockAt(place, Block.InstantiateHardBlock(position).GetComponent<Block>());
+                break;
+            case BlockType.Bomb:
+                SetBlockAt(place, Block.InstantiateBombBlock(position).GetComponent<Block>());
                 break;
             default:
                 Debug.LogWarning("wrong block type!");
@@ -323,6 +370,30 @@ namespace TB.Battles
                 }
             }
             return blocks;
+        }
+
+        public List<Point2> FindRemovedBlockPlacesByBomb(List<Point2> bombPlaces)
+        {
+            var blockPlaces = new List<Point2>();
+            foreach(var bombPlace in bombPlaces)
+            {
+                for(int i = 0; i < BombRemoveBlockSize; i++)
+                {
+                    for(int j = 0; j < BombRemoveBlockSize; j++)
+                    {
+                        var place = bombPlace + new Point2(j - 2, i + 1);
+                        Debug.Log("place: " + place);
+                        if(IsInField(place) && !IsEmpty(place))
+                        {
+                            if(!blockPlaces.Contains(place))
+                            {
+                                blockPlaces.Add(place);
+                            }
+                        }
+                    }
+                }
+            }
+            return blockPlaces;
         }
     }
 }
