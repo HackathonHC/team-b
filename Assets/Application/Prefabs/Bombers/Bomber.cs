@@ -160,8 +160,7 @@ namespace TB.Battles
             var trigger = col.collider.GetComponent<BlockAttackTrigger>();
             if (trigger && trigger.Attacking)
             {
-                // death
-                Debug.Log("digger died!");
+                Battle.Instance.TryOver(ResultType.TetrisWin);
             }
         }
 

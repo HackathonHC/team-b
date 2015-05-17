@@ -25,6 +25,9 @@ namespace TB.Battles
         [SerializeField]
         GameObject _cameraController;
 
+        [SerializeField]
+        Result _result;
+
         void Start()
         {
             if (!PhotonNetwork.connected)
@@ -64,6 +67,15 @@ namespace TB.Battles
                     Destroy(view.gameObject);
                 }
             };
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyDigger] = (values) => 
+            {
+                int viewID = global::System.Convert.ToInt32(values[0]);
+                var view = PhotonView.Find(viewID);
+                if (view)
+                {
+                    Destroy(view.gameObject);
+                }
+            };
         }
 
         public void DestroyBlock(Block block)
@@ -78,6 +90,12 @@ namespace TB.Battles
                                                            item.GetComponent<PhotonView>().viewID);
         }
 
+        public void DestroyDigger(Bomber digger)
+        {
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyDigger,
+                                                           digger.GetComponent<PhotonView>().viewID);
+        }
+
         public void SetAirGaugeValue(float v)
         {
             _airGauge.SetValue(v);
@@ -86,6 +104,11 @@ namespace TB.Battles
         public void ShakeCamera(float amount, float duration)
         {
             iTween.ShakePosition(_cameraController, Vector3.one * amount, duration);
+        }
+
+        public void TryOver(ResultType result)
+        {
+            _result.TrySet(result);
         }
     }
 }
