@@ -11,6 +11,8 @@ namespace TB.Battles
         [SerializeField]
         GameObject _lose;
 
+        bool _isOver = false;
+
         void Start()
         {
             gameObject.SetActive(false);
@@ -20,16 +22,23 @@ namespace TB.Battles
         {
             get
             {
-                return gameObject.activeSelf;
+                return _isOver;
             }
         }
 
         public void TrySet(ResultType result)
         {
-            if (gameObject.activeSelf)
+            if (IsOver)
             {
                 return;
             }
+            _isOver = true;
+            Battle.Instance.StartCoroutine(SetCoroutine(result));
+        }
+
+        IEnumerator SetCoroutine(ResultType result)
+        {
+            yield return new WaitForSeconds(2f);
 
             gameObject.SetActive(true);
 
