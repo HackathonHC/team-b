@@ -58,6 +58,8 @@ namespace TB.Battles
 
         Air _remainingAir = new Air();
 
+        bool _died = false;
+
         static Bomber _instance;
         public static Bomber Instance
         {
@@ -91,6 +93,11 @@ namespace TB.Battles
             Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
 
             if (State == StateType.Digging)
+            {
+                return;
+            }
+
+            if (_died)
             {
                 return;
             }
@@ -194,6 +201,7 @@ namespace TB.Battles
             {
                 Battle.Instance.TryOver(ResultType.TetrisWin);
                 PlayMotion("Dead");
+                _died = true;
             }
         }
 
