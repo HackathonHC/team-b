@@ -12,25 +12,25 @@ MonoBehaviour:
   m_Name: Bomber.Dead
   m_EditorClassIdentifier: 
   frames:
-  - time: 1
+  - time: 0
     sprite: {fileID: 21300000, guid: cac2aa14224764aedb8d3b6621563786, type: 3}
-  - time: 2
+  - time: .300000012
     sprite: {fileID: 21300000, guid: 2864778f6597c4323a79bf0341c71dc4, type: 3}
-  - time: 2
+  - time: .600000024
     sprite: {fileID: 21300000, guid: a7465993a4eb54b6e9cfc46f6eeb2d9b, type: 3}
-  - time: 2
+  - time: .899999976
     sprite: {fileID: 21300000, guid: 3b03f2960c59341f0a438996cdd0b00a, type: 3}
-  - time: 2
+  - time: 1.20000005
     sprite: {fileID: 21300000, guid: e7db05f75f3d148ccb70448a8dcf2b67, type: 3}
-  - time: 2
+  - time: 1.5
     sprite: {fileID: 21300000, guid: eb2e0753745c34bbe9288499db76a3b5, type: 3}
-  - time: 2
+  - time: 1.79999995
     sprite: {fileID: 21300000, guid: 3b4601975d43842d49eff249478843a6, type: 3}
-  - time: 2
+  - time: 2.0999999
     sprite: {fileID: 21300000, guid: a0c3bfdf2069447c6a21634a49b991bb, type: 3}
-  - time: 2
+  - time: 2.4000001
     sprite: {fileID: 21300000, guid: a42d5713d7cd14ed2b4ef54c70e85462, type: 3}
-  - time: 2
+  - time: 2.70000005
     sprite: {fileID: 21300000, guid: 6b3e712c6fc194dee86a45ec989eb0f0, type: 3}
-  - time: 2
+  - time: 3
     sprite: {fileID: 21300000, guid: ec75079467db04ba0b92db957221bd1c, type: 3}
