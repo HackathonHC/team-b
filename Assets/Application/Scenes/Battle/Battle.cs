@@ -157,7 +157,7 @@ namespace TB.Battles
 
         public void TryOver(ResultType result)
         {
-            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.FinishBattle, (int)result)
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.FinishBattle, (int)result);
         }
 
         public bool IsOver
