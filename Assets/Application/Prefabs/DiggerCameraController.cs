@@ -19,9 +19,9 @@ namespace TB.Battles
         void LateUpdate()
         {
             float y = Bomber.Instance.transform.position.y + Offset;
-            if (transform.position.y > y)
+            if (transform.localPosition.y > y)
             {
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
             }
         }
     }
