@@ -22,6 +22,23 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 0}
   m_MultiThreadedStateMachine: 1
+--- !u!1102 &110200576
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: IdleLeft
+  m_Speed: 2
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_Motion: {fileID: 7400000, guid: 0dacbce7a8c1349e797b117c7de9bd46, type: 2}
+  m_Tag: 
 --- !u!1102 &110215356
 AnimatorState:
   serializedVersion: 5
@@ -29,7 +46,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Dead
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -46,7 +63,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: WalkLeft
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -54,7 +71,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_Motion: {fileID: 7400000, guid: 102dab1ffc65944e2ada387ef32d1cc9, type: 2}
+  m_Motion: {fileID: 7400000, guid: 43620ca13f93642ee938e2b8cb49ad02, type: 2}
   m_Tag: 
 --- !u!1102 &110225366
 AnimatorState:
@@ -63,7 +80,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Idle
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -80,7 +97,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: DigLeft
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -97,7 +114,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: DigRight
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -114,7 +131,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: WalkRight
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -122,7 +139,24 @@ AnimatorState:
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_Motion: {fileID: 7400000, guid: 7dc2de9431ac4401eb2bbde70cd5b30e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8751c1bebc2dd4a49a7bcf12ba3bd3f6, type: 2}
+  m_Tag: 
+--- !u!1102 &110277104
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Win
+  m_Speed: 2
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_Motion: {fileID: 7400000, guid: 935e2b85d994c4740866e0b854be4463, type: 2}
   m_Tag: 
 --- !u!1102 &110277114
 AnimatorState:
@@ -131,7 +165,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Dig
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -140,6 +174,23 @@ AnimatorState:
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_Motion: {fileID: 7400000, guid: 60ba8c17d06bb4f9589e98916bd7cf4c, type: 2}
+  m_Tag: 
+--- !u!1102 &110283694
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: IdleRight
+  m_Speed: 2
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_Motion: {fileID: 7400000, guid: 0ee2a3f82bc7c4d0790712e94b1a5e7e, type: 2}
   m_Tag: 
 --- !u!1107 &110777080
 AnimatorStateMachine:
@@ -151,25 +202,34 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 110225366}
-    m_Position: {x: 228, y: -60, z: 0}
+    m_Position: {x: 36, y: -84, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110220690}
     m_Position: {x: 240, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110253728}
-    m_Position: {x: 252, y: 72, z: 0}
+    m_Position: {x: 240, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110277114}
-    m_Position: {x: 504, y: -84, z: 0}
+    m_Position: {x: 492, y: -96, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110229752}
-    m_Position: {x: 516, y: -24, z: 0}
+    m_Position: {x: 492, y: -48, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110245008}
     m_Position: {x: 516, y: 36, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110215356}
     m_Position: {x: 516, y: 156, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 110200576}
+    m_Position: {x: 252, y: -120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 110283694}
+    m_Position: {x: 252, y: -60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 110277104}
+    m_Position: {x: 504, y: 84, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

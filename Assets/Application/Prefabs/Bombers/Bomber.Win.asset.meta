@@ -1,6 +1,9 @@
 fileFormatVersion: 2
-guid: 43620ca13f93642ee938e2b8cb49ad02
-timeCreated: 1431842846
+guid: 90af4da68baa64c3981d28469692dc58
+labels:
+- Data
+- ScriptableObject
+timeCreated: 1431842650
 licenseType: Pro
 NativeFormatImporter:
   userData: 

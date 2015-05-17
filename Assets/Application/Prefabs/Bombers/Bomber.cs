@@ -11,6 +11,13 @@ namespace TB.Battles
             Digging = 2,
         }
 
+        public enum AngleType
+        {
+            Front,
+            Left,
+            Right,
+        }
+
         Rigidbody2D _rigidbody2D;
         public Rigidbody2D Rigidbody2D
         {
@@ -60,6 +67,8 @@ namespace TB.Battles
 
         bool _died = false;
 
+        AngleType _angle = AngleType.Front;
+
         static Bomber _instance;
         public static Bomber Instance
         {
@@ -102,7 +111,16 @@ namespace TB.Battles
                 return;
             }
 
-            var horizontalMove = Input.GetAxis("Horizontal");
+            float horizontalMove = 0f;
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                horizontalMove -= 1f;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                horizontalMove += 1f;
+            }
+
             float moveAngle = 0f;
             if (Mathf.Abs(horizontalMove) > 0.01f)
             {
@@ -112,17 +130,30 @@ namespace TB.Battles
             }
             else
             {
-                PlayMotion("Idle");
+                if (_angle == AngleType.Front)
+                {
+                    PlayMotion("Idle");
+                }
+                else if (_angle == AngleType.Right)
+                {
+                    PlayMotion("IdleRight");
+                }
+                else
+                {
+                    PlayMotion("IdleLeft");
+                }
             }
 
             if (moveAngle > 0.1f)
             {
                 PlayMotion("WalkRight");
+                _angle = AngleType.Right;
                 _flipper.localScale = new Vector3(-1f, _flipper.localScale.y, _flipper.localScale.z);
             }
             if (moveAngle < -0.1f)
             {
                 PlayMotion("WalkLeft");
+                _angle = AngleType.Left;
                 _flipper.localScale = new Vector3(1f, _flipper.localScale.y, _flipper.localScale.z);
             }
 
@@ -145,6 +176,7 @@ namespace TB.Battles
                     {
                         blaster = _bottomBlaster;
                         animationName = "Dig";
+                        _angle = AngleType.Front;
                     }
                     else
                     {
@@ -175,7 +207,19 @@ namespace TB.Battles
 
             State = StateType.Active;
 
-            PlayMotion("Idle");
+            if (_angle == AngleType.Front)
+            {
+                PlayMotion("Idle");
+            }
+            else if (_angle == AngleType.Left)
+            {
+                PlayMotion("IdleLeft");
+            }
+            else
+            {
+                PlayMotion("IdleRight");
+            }
+
             if (target.Type == BlockType.Wall)
             {
                 yield break;
