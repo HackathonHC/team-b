@@ -65,6 +65,11 @@ namespace TB.Battles
         {
             return PhotonNetwork.Instantiate("PhotonViews/Blocks/UnbreakableBlock", position, Quaternion.identity, 0);
         }
+
+        public static GameObject InstantiateBombBlock(Vector3 position)
+        {
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/BombBlock", position, Quaternion.identity, 0);
+        }
     }
 
     public enum BlockType
@@ -73,6 +78,7 @@ namespace TB.Battles
         Wall,
         Unbreakable,
         Hard,
+        Bomb,
     }
 }
 

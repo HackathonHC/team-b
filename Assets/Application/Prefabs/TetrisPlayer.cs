@@ -171,55 +171,84 @@ namespace TB.Battles
             var blocks = field.FindFilledRowBlocks();
             if(blocks.Count > 0)
             {
-                var removedRowHeights = new List<int>();
-                foreach(var block in blocks)
-                {
-                    if(!removedRowHeights.Contains(block.Place.y))
-                    {
-                        removedRowHeights.Add(block.Place.y);
-                    }
-                }
-
-                var bottomRemovedRowHeight = 0;
-                foreach(int height in removedRowHeights)
-                {
-                    if(height > bottomRemovedRowHeight)
-                    {
-                        bottomRemovedRowHeight = height;
-                    }
-                }
-
-                var extraRemovedRowHeights = field.FindExtraRemovedRowHeights(removedRowHeights.Count, bottomRemovedRowHeight);
-                extraRemovedRowHeights.RemoveAll((_height) => removedRowHeights.Contains(_height));
-
-                foreach(var block in blocks)
-                {
-                    field.RemoveBlockAt(block.Place);
-                }
-                foreach(var height in removedRowHeights)
-                {
-                    field.RemoveRow(height);
-                }
-
-                var extraRemovedBlocks = new List<Block>();
-                foreach(var height in extraRemovedRowHeights)
-                {
-                    extraRemovedBlocks.AddRange(field.GetBlocksAtRow(height));
-                }
-                foreach(var block in extraRemovedBlocks)
-                {
-                    field.RemoveBlockAt(block.Place);
-                }
-                foreach(var height in extraRemovedRowHeights)
-                {
-                    field.RemoveRow(height);
-                }
+                RemoveBlocks(blocks);
             }
 
             isUpdateSuspended = true;
             Invoke("CreateNewBlockOrGameOver", 0.1f);
         }
 
+        void RemoveBlocks(List<Block> blocks)
+        {
+            var removedRowHeights = new List<int>();
+            foreach(var block in blocks)
+            {
+                if(!removedRowHeights.Contains(block.Place.y))
+                {
+                    removedRowHeights.Add(block.Place.y);
+                }
+            }
+            
+            var bottomRemovedRowHeight = 0;
+            foreach(int height in removedRowHeights)
+            {
+                if(height > bottomRemovedRowHeight)
+                {
+                    bottomRemovedRowHeight = height;
+                }
+            }
+            
+            var extraRemovedRowHeights = field.FindExtraRemovedRowHeights(removedRowHeights.Count, bottomRemovedRowHeight);
+            extraRemovedRowHeights.RemoveAll((_height) => removedRowHeights.Contains(_height));
+
+            List<Point2> bombBlockPlaces = new List<Point2>();
+            foreach(var block in blocks)
+            {
+                if(block.Type == BlockType.Bomb)
+                {
+                    bombBlockPlaces.Add(block.Place);
+                }
+            }
+
+            foreach(var block in blocks)
+            {
+                field.RemoveBlockAt(block.Place);
+            }
+            foreach(var height in removedRowHeights)
+            {
+                field.RemoveRow(height);
+            }
+            
+            var extraRemovedBlocks = new List<Block>();
+            foreach(var height in extraRemovedRowHeights)
+            {
+                extraRemovedBlocks.AddRange(field.GetBlocksAtRow(height));
+            }
+
+            foreach(var block in extraRemovedBlocks)
+            {
+                if(block.Type == BlockType.Bomb)
+                {
+                    bombBlockPlaces.Add(block.Place);
+                }
+            }
+
+            foreach(var block in extraRemovedBlocks)
+            {
+                field.RemoveBlockAt(block.Place);
+            }
+            foreach(var height in extraRemovedRowHeights)
+            {
+                field.RemoveRow(height);
+            }
+
+            var removedBlockPlacesByBomb = field.FindRemovedBlockPlacesByBomb(bombBlockPlaces);
+            foreach(var place in removedBlockPlacesByBomb)
+            {
+                field.RemoveBlockAt(place);
+            }
+        }
+        
         void CreateNewBlockOrGameOver()
         {
             if(CanCreateTetrisBlock())
