@@ -85,7 +85,7 @@ namespace TB.Battles
                 var header = (HeaderFlags)stream.ReceiveNext();
                 if ((header & HeaderFlags.Position) != 0)
                 {
-                    _receivedPosition = (Vector2)stream.ReceiveNext();
+                    _receivedPosition = (Vector3)stream.ReceiveNext();
                 }
             }
         }
