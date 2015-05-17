@@ -34,51 +34,14 @@ namespace TB.Battles
         [SerializeField]
         Transform _backgroundBottom;
 
-        IEnumerator Start()
+        void Start()
         {
             Resource.Instance.Initialize();
 
-            Field field = null;;
             if (!PhotonNetwork.connected)
             {
                 PhotonNetwork.offlineMode = true;
                 PhotonNetwork.CreateRoom("");
-            }
-            if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
-            {
-                field = Instantiate(_fieldPrefab).GetComponent<Field>();
-                field.Initialize();
-
-                SLA.PhotonPropertyUtil.SetPlayerCustomProperty("blockCount", FindObjectsOfType<BlockPhotonView>().Length);
-
-                // wait for initialize
-                if (PhotonNetwork.otherPlayers.Length > 0)
-                {
-                    while(true)
-                    {
-                        if (PhotonNetwork.otherPlayers[0].customProperties.ContainsKey("blocksAreReady"))
-                        {
-                            break;
-                        }
-                        yield return null;
-                    }
-                }
-            }
-            else
-            {
-                while(true)
-                {
-                    object count = null;
-                    if (PhotonNetwork.masterClient.customProperties.TryGetValue("blockCount", out count))
-                    {
-                        if (FindObjectsOfType<BlockPhotonView>().Length == global::System.Convert.ToInt32(count))
-                        {
-                            break;
-                        }
-                    }
-                    SLA.PhotonPropertyUtil.SetPlayerCustomProperty("blocksAreReady", true);
-                    yield return null;
-                }
             }
 
             if (GameData.Instance.playerType == PlayerType.Digger || (Consts.Standalone && PhotonNetwork.offlineMode))
@@ -87,6 +50,9 @@ namespace TB.Battles
             }
             if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
+                Field field = null;;
+                field = Instantiate(_fieldPrefab).GetComponent<Field>();
+                field.Initialize();
                 var tetrisPlayer = Instantiate(_tetrisPlayerPrefab).GetComponent<TetrisPlayer>();
                 tetrisPlayer.Initialize(field, 1);
             }
