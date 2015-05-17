@@ -51,7 +51,7 @@ namespace TB.Battles
         void CreateTetrisBlock(bool firstTime = false)
         {
             TetrisBlock = Instantiate(tetrisBlockPrefab.gameObject).GetComponent<TetrisBlock>();
-            TetrisBlock.Initialize(ChooseTetrisBlockType(), Field.BlockUnit);
+            TetrisBlock.Initialize(ChooseTetrisBlockType(), Field.BlockUnit, tetrisBlockPlace);
             if(firstTime)
             {
                 tetrisBlockPlace = field.CurrentTopCenterPlace;
