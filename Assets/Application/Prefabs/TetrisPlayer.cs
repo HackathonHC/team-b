@@ -9,7 +9,7 @@ namespace TB.Battles
     public class TetrisPlayer : MonoBehaviour
     {
         static readonly float moveDelay = 0.1f;
-        static readonly int createBlockOffset = 4;
+        static readonly int createBlockOffset = 5;
 
         static TetrisPlayer _instance;
         public static TetrisPlayer Instance
@@ -32,6 +32,7 @@ namespace TB.Battles
         float currentTime;
         float currentMoveDelay;
         float speed;
+        bool isUpdateSuspended = false;
 
         public void Initialize(Field field, float initialSpeed)
         {
@@ -58,7 +59,6 @@ namespace TB.Battles
             else
             {
                 tetrisBlockPlace = new Point2(field.CurrentTopCenterPlace.x, field.FindTopBlockPlace().y - createBlockOffset);
-                Debug.Log("tetrisBlockPlace: " + tetrisBlockPlace);
             }
             TetrisBlock.transform.localPosition = Field.ComputePosition(tetrisBlockPlace);
         }
@@ -191,6 +191,12 @@ namespace TB.Battles
                 }
             }
 
+            isUpdateSuspended = true;
+            Invoke("CreateNewBlockOrGameOver", 0.1f);
+        }
+
+        void CreateNewBlockOrGameOver()
+        {
             if(CanCreateTetrisBlock())
             {
                 CreateTetrisBlock();
@@ -199,6 +205,7 @@ namespace TB.Battles
             {
                 Battle.Instance.TryOver(ResultType.DiggerWin);
             }
+            isUpdateSuspended = false;
         }
 
         void Update()
@@ -210,6 +217,11 @@ namespace TB.Battles
             }
 
             if(Battle.Instance.IsOver)
+            {
+                return;
+            }
+
+            if(isUpdateSuspended)
             {
                 return;
             }
@@ -241,12 +253,12 @@ namespace TB.Battles
                     if(CanGoDown())
                     {
                         GoDown();
-                        currentMoveDelay = moveDelay;
                     }
                     else
                     {
                         SettleDown();
                     }
+                    currentMoveDelay = moveDelay;
                     currentTime = 0f;
                     return;
                 }
