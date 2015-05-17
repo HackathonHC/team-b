@@ -82,9 +82,9 @@ namespace TB.Battles
                 0,0,0,0,
             });
             blockDefinisions.Add(TetrisBlockType.Three, new List<int>() {
+                0,0,0,0,
                 0,0,1,0,
-                0,0,1,0,
-                0,0,1,0,
+                0,1,1,0,
                 0,0,0,0,
             });
         }
