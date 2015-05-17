@@ -14,6 +14,8 @@ namespace TB
         DestroyBlock = 1,
         DestroyItem = 2,
         DestroyDigger = 3,
+        CreateSparksEffect = 4,
+        CreateDestroyBlockEffect = 5,
     }
 
     public enum ResultType
