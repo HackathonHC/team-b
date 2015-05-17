@@ -36,6 +36,8 @@ namespace TB.Battles
 
         IEnumerator Start()
         {
+            Resource.Instance.Initialize();
+
             Field field = null;;
             if (!PhotonNetwork.connected)
             {
