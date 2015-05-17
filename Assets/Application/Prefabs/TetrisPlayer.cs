@@ -116,6 +116,11 @@ namespace TB.Battles
         void GoDown()
         {
             GoDirection(new Point2(0, 1));
+
+            if(tetrisBlockPlace.y >= Field.TopSpaceHeight)
+            {
+                SubCameraController.Instance._camera.enabled = true;
+            }
         }
 
         void GoRight()
