@@ -115,5 +115,13 @@ namespace TB.Battles
         {
             _result.TrySet(result);
         }
+
+        public bool IsOver
+        {
+            get
+            {
+                return _result.IsOver;
+            }
+        }
     }
 }

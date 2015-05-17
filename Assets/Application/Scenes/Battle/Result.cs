@@ -16,6 +16,14 @@ namespace TB.Battles
             gameObject.SetActive(false);
         }
 
+        public bool IsOver
+        {
+            get
+            {
+                return gameObject.activeSelf;
+            }
+        }
+
         public void TrySet(ResultType result)
         {
             if (gameObject.activeSelf)
