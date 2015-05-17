@@ -11,7 +11,7 @@ namespace TB.Battles
         public const int TotalHeight = 50;
         public const int TopSpaceHeight = 10;
         public const float BlockUnit = 1f;
-        public const int BombRemoveBlockSize = 5;
+        public const int BombRemoveBlockSize = 8;
         public Point2 CurrentTopCenterPlace {get; private set;}
 
         List<Block> blocks;
@@ -157,7 +157,7 @@ namespace TB.Battles
             {
                 blockExists.Add(false);
             }
-            if(depth > 0 && depth % 10 == 0)
+            if(depth > 0 && depth % 5 == 0)
             {
                 int blocksCount = 0;
                 foreach(var exist in blockExistences)
