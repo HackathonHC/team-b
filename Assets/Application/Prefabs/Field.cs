@@ -7,39 +7,34 @@ namespace TB.Battles
 {
     public class Field : MonoBehaviour
     {
-        public int Width {get; private set;}
-        public int TotalHeight {get; private set;}
-        public int TopSpaceHeight {get; private set;}
-        public float BlockUnit {get; private set;}
+        public const int Width = 10;
+        public const int TotalHeight = 50;
+        public const int TopSpaceHeight = 10;
+        public const float BlockUnit = 1f;
         public Point2 CurrentTopCenterPlace {get; private set;}
 
         List<Block> blocks;
 
-        public void Initialize(int width, int totalHeight, int topSpaceHeight, float blockUnit)
+        public void Initialize()
         {
-            Width = width;
-            TotalHeight = totalHeight;
-            TopSpaceHeight = topSpaceHeight;
-            BlockUnit = blockUnit;
-
             blocks = new List<Block>();
-            for(int i = 0; i < (width + 2) * (totalHeight + 2); i++)
+            for(int i = 0; i < (Width + 2) * (TotalHeight + 2); i++)
             {
                 blocks.Add(null);
             }
 
-            for(int i = 0; i < totalHeight + 2; i++)
+            for(int i = 0; i < TotalHeight + 2; i++)
             {
                 // Left
                 var leftPlace = new Point2(0, i);
-                var rightPlace = new Point2(width + 1, i);
+                var rightPlace = new Point2(Width + 1, i);
                 CreateBlockAt(leftPlace, BlockType.Wall);
                 CreateBlockAt(rightPlace, BlockType.Wall);
             }
-            for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
+            for(int i = TopSpaceHeight + 1; i < TotalHeight + 2; i++)
             {
-                var blockExistences = GenerateBlockExisteces(width);
-                for(int j = 1; j <= width; j++)
+                var blockExistences = GenerateBlockExisteces(Width);
+                for(int j = 1; j <= Width; j++)
                 {
                     var place = new Point2(j, i);
                     if (blockExistences[j - 1])
@@ -60,7 +55,7 @@ namespace TB.Battles
                 }
             }
 
-            CurrentTopCenterPlace = new Point2(width / 2 + 1, 0);
+            CurrentTopCenterPlace = new Point2(Width / 2 + 1, 0);
         }
 
         static List<bool> GenerateBlockExisteces(int width)
@@ -77,9 +72,25 @@ namespace TB.Battles
             return blockExists;
         }
 
-        public Vector3 ComputePosition(Point2 place)
+        static public Vector3 ComputePosition(Point2 place)
         {
             return new Vector3(place.x - (float)Width / 2 - 0.5f, - (place.y - (float)TotalHeight / 2 - 0.5f), 0) * BlockUnit;
+        }
+        
+        public static Vector3 InitialCenterPlace
+        {
+            get
+            {
+                return ComputePosition(new Point2(Width / 2 + 1, 0));
+            }
+        }
+
+        public static Vector3 SurfacePosition
+        {
+            get
+            {
+                return ComputePosition(new Point2(Width / 2 + 1, TopSpaceHeight));
+            }
         }
 
         public bool IsInField(Point2 place)

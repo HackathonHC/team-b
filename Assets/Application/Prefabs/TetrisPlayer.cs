@@ -49,9 +49,9 @@ namespace TB.Battles
         void CreateTetrisBlock()
         {
             TetrisBlock = Instantiate(tetrisBlockPrefab.gameObject).GetComponent<TetrisBlock>();
-            TetrisBlock.Initialize(ChooseTetrisBlockType(), field.BlockUnit);
+            TetrisBlock.Initialize(ChooseTetrisBlockType(), Field.BlockUnit);
             tetrisBlockPlace = field.CurrentTopCenterPlace;
-            TetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
+            TetrisBlock.transform.localPosition = Field.ComputePosition(tetrisBlockPlace);
         }
 
         TetrisBlockType ChooseTetrisBlockType()
@@ -110,7 +110,7 @@ namespace TB.Battles
         void GoDirection(Point2 direction)
         {
             tetrisBlockPlace += direction;
-            TetrisBlock.transform.localPosition = field.ComputePosition(tetrisBlockPlace);
+            TetrisBlock.transform.localPosition = Field.ComputePosition(tetrisBlockPlace);
         }
 
         void RotateLeft()

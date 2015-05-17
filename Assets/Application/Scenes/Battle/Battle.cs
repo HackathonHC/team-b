@@ -28,6 +28,9 @@ namespace TB.Battles
         [SerializeField]
         Result _result;
 
+        [SerializeField]
+        Transform _background;
+
         void Start()
         {
             if (!PhotonNetwork.connected)
@@ -44,10 +47,12 @@ namespace TB.Battles
             if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
                 var field = Instantiate(_fieldPrefab).GetComponent<Field>();
-                field.Initialize(10, 50, 10, 1);
+                field.Initialize();
                 var tetrisPlayer = Instantiate(_tetrisPlayerPrefab).GetComponent<TetrisPlayer>();
                 tetrisPlayer.Initialize(field, 1);
             }
+
+            _background.transform.position = Field.SurfacePosition;
 
             SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyBlock] = (values) => 
             {

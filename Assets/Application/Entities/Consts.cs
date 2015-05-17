@@ -14,6 +14,5 @@ namespace TB
             {Battles.BlockType.Hard, 1},
             {Battles.BlockType.Unbreakable, 1},
         });
-        
     }
 }
