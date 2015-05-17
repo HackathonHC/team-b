@@ -12,7 +12,7 @@ namespace TB.Battles
         public const int TopSpaceHeight = 10;
         public const int BottomSpaceHeight = 22;
         public const float BlockUnit = 1f;
-        public const int BombRemoveBlockSize = 5;
+        public const int BombRemoveBlockSize = 9;
         public Point2 CurrentTopCenterPlace {get; private set;}
 
         List<Block> blocks;
@@ -164,7 +164,7 @@ namespace TB.Battles
             {
                 blockExists.Add(false);
             }
-            if(depth > 0 && depth % 10 == 0)
+            if(depth > 0 && depth % 5 == 0)
             {
                 int blocksCount = 0;
                 foreach(var exist in blockExistences)
@@ -223,6 +223,11 @@ namespace TB.Battles
         public bool IsEmpty(Point2 place)
         {
             return GetBlockAt(place) == null;
+        }
+
+        public bool IsWall(Point2 place)
+        {
+            return GetBlockAt(place).Type == BlockType.Wall;
         }
         
         public Block GetBlockAt(Point2 place)
@@ -391,9 +396,8 @@ namespace TB.Battles
                 {
                     for(int j = 0; j < BombRemoveBlockSize; j++)
                     {
-                        var place = bombPlace + new Point2(j - 2, i + 1);
-                        Debug.Log("place: " + place);
-                        if(IsInField(place) && !IsEmpty(place))
+                        var place = bombPlace + new Point2(j - BombRemoveBlockSize / 2, i - BombRemoveBlockSize / 2);
+                        if(IsInField(place) && !IsEmpty(place) && !IsWall(place))
                         {
                             if(!blockPlaces.Contains(place))
                             {

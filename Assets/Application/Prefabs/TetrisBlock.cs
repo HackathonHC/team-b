@@ -99,7 +99,7 @@ namespace TB.Battles
         public List<Block> Blocks { get; private set; }
         float blockUnit;
 
-        public void Initialize(TetrisBlockType type, float blockUnit)
+        public void Initialize(TetrisBlockType type, float blockUnit, Point2 tetrisBlockPlace)
         {
             Blocks = new List<Block>();
             this.blockUnit = blockUnit;
@@ -112,10 +112,10 @@ namespace TB.Battles
                     if(definistion[i * Size + j] == 1)
                     {
                         var place = new Point2(j, i);
-                        var position = ComputePosition(place);
+                        var position = Field.ComputePosition(place + tetrisBlockPlace - PivotPlace());
                         var block = InstantiateTetrisBlock(position, type).GetComponent<Block>();
                         block.transform.parent = this.transform;
-                        block.transform.localPosition = position;
+                        block.transform.localPosition = ComputePosition(place);
                         block.transform.localScale = Vector3.one;
                         block.Place = place;
                         Blocks.Add(block);
