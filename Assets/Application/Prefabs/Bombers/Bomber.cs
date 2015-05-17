@@ -91,6 +91,14 @@ namespace TB.Battles
             };
         }
 
+        bool AirIsEmpty
+        {
+            get
+            {
+                return (_remainingAir.Value <= 0f);
+            }
+        }
+
         void Update()
         {
             // controll
@@ -125,7 +133,7 @@ namespace TB.Battles
             if (Mathf.Abs(horizontalMove) > 0.01f)
             {
                 moveAngle = Mathf.Sign(horizontalMove);
-                float force = (_remainingAir.Value > 0f) ? 30f : 15f;
+                float force = AirIsEmpty ? 10f : 30f;
                 Rigidbody2D.AddForce(new Vector2(moveAngle, 0f) * force * Time.deltaTime, ForceMode2D.Impulse);
             }
             else
@@ -203,7 +211,14 @@ namespace TB.Battles
             State = StateType.Digging;
             Resource.Instance.CreateSparksEffect(effectPosition);
             Battle.Instance.ShakeCamera(0.1f, DestroyBlockDelay);
-            yield return new WaitForSeconds(DestroyBlockDelay);
+            if (AirIsEmpty)
+            {
+                yield return new WaitForSeconds(DestroyBlockDelay * 1.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(DestroyBlockDelay);
+            }
 
             State = StateType.Active;
 
