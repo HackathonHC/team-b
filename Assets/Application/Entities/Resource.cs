@@ -25,7 +25,7 @@ namespace TB
         [SerializeField]
         GameObject _sparksEffectPrefab;
 
-        void Initialize()
+        public void Initialize()
         {
             SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.CreateSparksEffect] = (values) =>
             {

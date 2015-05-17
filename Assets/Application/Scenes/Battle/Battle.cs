@@ -31,8 +31,13 @@ namespace TB.Battles
         [SerializeField]
         Transform _background;
 
+        [SerializeField]
+        Transform _backgroundBottom;
+
         IEnumerator Start()
         {
+            Resource.Instance.Initialize();
+
             Field field = null;;
             if (!PhotonNetwork.connected)
             {
@@ -155,6 +160,14 @@ namespace TB.Battles
             get
             {
                 return _result.IsOver;
+            }
+        }
+
+        public float BackgroundBottom
+        {
+            get
+            {
+                return _backgroundBottom.position.y;
             }
         }
     }

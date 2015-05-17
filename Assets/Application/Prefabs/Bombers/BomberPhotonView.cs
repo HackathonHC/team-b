@@ -32,6 +32,11 @@ namespace TB.Battles
         }
 
         Vector3 _servedPosition;
+        Vector3 _positionWhenReceived;
+        Vector3 _receivedPosition;
+        float _receivedTime = 0f;
+        double _servedTime = 0d;
+        double _serveInterval;
 
         void Start()
         {
@@ -65,11 +70,33 @@ namespace TB.Battles
             }
             else
             {
+                _receivedTime = Time.fixedTime;
+                
+                if (_servedTime == 0d)
+                {
+                    _serveInterval = 1d / PhotonNetwork.sendRateOnSerialize;
+                }
+                else
+                {
+                    _serveInterval = info.timestamp - _servedTime;
+                }
+                _servedTime = info.timestamp;
+                _positionWhenReceived = transform.position;
                 var header = (HeaderFlags)stream.ReceiveNext();
                 if ((header & HeaderFlags.Position) != 0)
                 {
-                    transform.position = (Vector3)stream.ReceiveNext();
+                    _receivedPosition = (Vector2)stream.ReceiveNext();
                 }
+            }
+        }
+        void FixedUpdate()
+        {
+            if (!PhotonView.isMine && _receivedTime != 0f)
+            {
+                var elapsedTime = Time.fixedTime - _receivedTime;
+                var fraction = elapsedTime / (float)_serveInterval;
+                
+                transform.position = Vector3.Lerp(_positionWhenReceived, _receivedPosition, fraction);
             }
         }
     }

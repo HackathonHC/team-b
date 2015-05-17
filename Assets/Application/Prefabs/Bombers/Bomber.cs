@@ -66,6 +66,7 @@ namespace TB.Battles
         Air _remainingAir = new Air();
 
         bool _died = false;
+        bool _won = false;
 
         AngleType _angle = AngleType.Front;
 
@@ -115,6 +116,10 @@ namespace TB.Battles
             }
 
             if (_died)
+            {
+                return;
+            }
+            if (_won)
             {
                 return;
             }
@@ -275,6 +280,16 @@ namespace TB.Battles
 
         public void PlayMotion(string name)
         {
+            if (_animatonName == "Win")
+            {
+                return;
+            }
+
+            if (name == "Win")
+            {
+                _won = true;
+            }
+
             if (_animatonName != name)
             {
                 SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.PlayBomberAnimation, name);

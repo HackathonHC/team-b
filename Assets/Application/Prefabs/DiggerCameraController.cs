@@ -24,6 +24,7 @@ namespace TB.Battles
                 float y = bomber.transform.position.y + Offset;
                 if (transform.localPosition.y > y)
                 {
+                    y = Mathf.Max(y, Camera.main.orthographicSize + Battle.Instance.BackgroundBottom);
                     transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
                 }
             }

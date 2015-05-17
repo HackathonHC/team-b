@@ -8,8 +8,9 @@ namespace TB.Battles
     public class Field : MonoBehaviour
     {
         public const int Width = 10;
-        public const int TotalHeight = 50;
+        public const int TotalHeight = 72;
         public const int TopSpaceHeight = 10;
+        public const int BottomSpaceHeight = 22;
         public const float BlockUnit = 1f;
         public const int BombRemoveBlockSize = 9;
         public Point2 CurrentTopCenterPlace {get; private set;}
@@ -32,7 +33,13 @@ namespace TB.Battles
                 CreateBlockAt(leftPlace, BlockType.Wall);
                 CreateBlockAt(rightPlace, BlockType.Wall);
             }
-            for(int i = TopSpaceHeight + 1; i < TotalHeight + 2; i++)
+            for(int i = 0; i < Width; i++)
+            {
+                // Bottom
+                var place = new Point2(i + 1, TotalHeight + 1);
+                CreateBlockAt(place, BlockType.Bottom);
+            }
+            for(int i = TopSpaceHeight + 1; i < TotalHeight - BottomSpaceHeight + 2; i++)
             {
                 var blockExistences = GenerateBlockExisteces(Width);
                 var unbreakableBlockExistences = GenerateUnbreakableBlockExistences(Width, i, blockExistences);
@@ -77,7 +84,7 @@ namespace TB.Battles
         SLA.WeightedRandom<Battles.BlockType> GenerateBlockSelector(int depth)
         {
             int actualDepth = depth - TopSpaceHeight;
-            int actualTotalDepth = TotalHeight + 2 - TopSpaceHeight;
+            int actualTotalDepth = TotalHeight + 2 - TopSpaceHeight - BottomSpaceHeight;
 
             var blockTypeProbMap = new Dictionary<Battles.BlockType, int>();
             blockTypeProbMap.Add(Battles.BlockType.Normal, 100 * (actualTotalDepth - actualDepth) / actualTotalDepth);
@@ -254,6 +261,9 @@ namespace TB.Battles
                 break;
             case BlockType.Bomb:
                 SetBlockAt(place, Block.InstantiateBombBlock(position).GetComponent<Block>());
+                break;
+            case BlockType.Bottom:
+                SetBlockAt(place, Block.InstantiateBottomBlock(position).GetComponent<Block>());
                 break;
             default:
                 Debug.LogWarning("wrong block type!");
