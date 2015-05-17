@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11404166}
   - 114: {fileID: 11420752}
   m_Layer: 10
-  m_Name: TetrisBlock
+  m_Name: BombTetrisBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5be256ea7df40258b78f1cf0ddc944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 4
   MaxLife: 1
   _sprites: []
 --- !u!212 &21241110
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 66d723a5b2ee74422986966d8b091c4f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
