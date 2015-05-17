@@ -7,6 +7,7 @@ namespace TB
     static public class Consts
     {
         static public readonly int BlockLayer = LayerMask.NameToLayer("Block");
+        static public readonly int ItemLayer = LayerMask.NameToLayer("Item");
         static public readonly bool Standalone = true;
 
         static public readonly SLA.WeightedRandom<Battles.BlockType> BlockSelector = new SLA.WeightedRandom<Battles.BlockType>(new Dictionary<Battles.BlockType, int>(){

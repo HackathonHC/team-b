@@ -113,11 +113,11 @@ CircleCollider2D:
   m_GameObject: {fileID: 123728}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .25999999
+  m_Radius: .479999989
 --- !u!58 &5899500
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -126,11 +126,11 @@ CircleCollider2D:
   m_GameObject: {fileID: 161264}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .779999971
+  m_Radius: .280000001
 --- !u!114 &11422920
 MonoBehaviour:
   m_ObjectHideFlags: 1

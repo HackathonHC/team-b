@@ -166,10 +166,9 @@ namespace TB.Battles
 
         void OnTriggerEnter2D(Collider2D col)
         {
-            var item = col.GetComponent<Item>();
-            if (item)
+            if (col.gameObject.layer == Consts.ItemLayer)
             {
-                Battle.Instance.DestroyItem(item);
+                Battle.Instance.DestroyItem(col.gameObject.GetComponent<Item>());
                 _remainingAir.Value = AirMax;
             }
         }
