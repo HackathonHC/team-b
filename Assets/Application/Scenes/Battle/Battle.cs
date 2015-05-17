@@ -120,6 +120,11 @@ namespace TB.Battles
                     Destroy(view.gameObject);
                 }
             };
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.FinishBattle] = (values) => 
+            {
+                var result = (ResultType)values[0];
+                _result.TrySet(result);
+            };
         }
 
         public void DestroyBlock(Block block)
@@ -152,7 +157,7 @@ namespace TB.Battles
 
         public void TryOver(ResultType result)
         {
-            _result.TrySet(result);
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.FinishBattle, (int)result)
         }
 
         public bool IsOver
