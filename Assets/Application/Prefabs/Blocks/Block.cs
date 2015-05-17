@@ -7,12 +7,32 @@ namespace TB.Battles
     [RequireComponent(typeof(SpriteRenderer))]
     public class Block : MonoBehaviour
     {
+        SpriteRenderer _spriteRdnerer;
+        SpriteRenderer SpriteRenderer
+        {
+            get
+            {
+                return _spriteRdnerer ?? (_spriteRdnerer = GetComponent<SpriteRenderer>());
+            }
+        }
+
         public BlockType Type = BlockType.Normal;
         public Point2 Place {get; set;}
 
         public int MaxLife; 
 
         int _damageCount = 0;
+
+        [SerializeField]
+        Sprite[] _sprites;
+
+        void Start()
+        {
+            if (_sprites != null && _sprites.Length > 0)
+            {
+                SpriteRenderer.sprite = _sprites[Random.Range(0, _sprites.Length)];
+            }
+        }
 
         public int Life
         {
