@@ -31,6 +31,9 @@ namespace TB.Battles
         [SerializeField]
         Transform _background;
 
+        [SerializeField]
+        Transform _backgroundBottom;
+
         IEnumerator Start()
         {
             Field field = null;;
@@ -155,6 +158,14 @@ namespace TB.Battles
             get
             {
                 return _result.IsOver;
+            }
+        }
+
+        public float BackgroundBottom
+        {
+            get
+            {
+                return _backgroundBottom.position.y;
             }
         }
     }

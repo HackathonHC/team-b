@@ -21,7 +21,11 @@ namespace TB.Battles
 
             if (col.tag == "BottomBlock")
             {
-                Battle.Instance.TryOver(ResultType.DiggerWin);
+                if (!Battle.Instance.IsOver)
+                {
+                    Battle.Instance.TryOver(ResultType.DiggerWin);
+                    GetComponentInParent<Bomber>().PlayMotion("Win");
+                }
             }
         }
 
