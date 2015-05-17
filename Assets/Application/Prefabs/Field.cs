@@ -39,6 +39,8 @@ namespace TB.Battles
             for(int i = topSpaceHeight + 1; i < totalHeight + 2; i++)
             {
                 var blockExistences = GenerateBlockExisteces(width);
+                var unbreakableBlockExistences = GenerateUnbreakableBlockExistences(width, i, blockExistences);
+                var selector = GenerateBlockSelector(i);
                 for(int j = 1; j <= width; j++)
                 {
                     var place = new Point2(j, i);
@@ -46,7 +48,14 @@ namespace TB.Battles
                     {
                         if(IsEmpty(place))
                         {
-                            CreateBlockAt(place, Consts.BlockSelector.Select());
+                            if(unbreakableBlockExistences[j - 1])
+                            {
+                                CreateBlockAt(place, BlockType.Unbreakable);
+                            }
+                            else
+                            {
+                                CreateBlockAt(place, selector.Select());
+                            }
                         }
                     }
                     else
@@ -63,6 +72,17 @@ namespace TB.Battles
             CurrentTopCenterPlace = new Point2(width / 2 + 1, 0);
         }
 
+        SLA.WeightedRandom<Battles.BlockType> GenerateBlockSelector(int depth)
+        {
+            int actualDepth = depth - TopSpaceHeight;
+            int actualTotalDepth = TotalHeight + 2 - TopSpaceHeight;
+
+            var blockTypeProbMap = new Dictionary<Battles.BlockType, int>();
+            blockTypeProbMap.Add(Battles.BlockType.Normal, 100 * (actualTotalDepth - actualDepth) / actualTotalDepth);
+            blockTypeProbMap.Add(Battles.BlockType.Hard, 100 * actualDepth / actualTotalDepth);
+            return  new SLA.WeightedRandom<Battles.BlockType>(blockTypeProbMap);
+        }
+
         static List<bool> GenerateBlockExisteces(int width)
         {
             int emptyBlockCount = Random.Range(1, width - 1) * Random.Range(1, width - 1) / (width - 2);
@@ -74,6 +94,57 @@ namespace TB.Battles
                 blockExists.Add(k < emptyBlockCount);
             }
             SLA.RandomUtil.Shuffle<bool>(ref blockExists);
+            return blockExists;
+        }
+
+        List<bool> GenerateUnbreakableBlockExistences(int width, int depth, List<bool> blockExistences)
+        {
+            var blockExists = new List<bool>();
+            for(int i = 0; i < width; i++)
+            {
+                blockExists.Add(false);
+            }
+            if(depth < TotalHeight / 2 || depth % 2 == 0)
+            {
+                return blockExists;
+            }
+
+            int leftSpaceIndex = 0;
+            int rightSpaceIndex = blockExistences.Count - 1;
+
+            for(int i = 0; i < width; i++)
+            {
+                if(!blockExistences[i])
+                {
+                    leftSpaceIndex = i;
+                    break;
+                }
+            }
+            for(int i = width - 1; i >= 0; i--)
+            {
+                if(!blockExistences[i])
+                {
+                    rightSpaceIndex = i;
+                    break;
+                }
+            }
+
+            if(leftSpaceIndex > width - 1 - rightSpaceIndex)
+            {
+                int unbreakableCount = Random.Range(0, leftSpaceIndex);
+                for(int i = 0; i < unbreakableCount; i++)
+                {
+                    blockExists[i] = true;
+                }
+            }
+            else
+            {
+                int unbreakableCount = Random.Range(0, width - 1 - rightSpaceIndex);
+                for(int i = 0; i < unbreakableCount; i++)
+                {
+                    blockExists[width - i - 1] = true;
+                }
+            }
             return blockExists;
         }
 
