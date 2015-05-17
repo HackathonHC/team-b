@@ -22,6 +22,12 @@ namespace TB.Battles
         [SerializeField]
         Gauge _airGauge;
 
+        [SerializeField]
+        GameObject _cameraController;
+
+        [SerializeField]
+        Result _result;
+
         void Start()
         {
             if (!PhotonNetwork.connected)
@@ -33,7 +39,7 @@ namespace TB.Battles
             if (GameData.Instance.playerType == PlayerType.Digger || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
                 // FIXME: magic number position
-                PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 25.5f, 0f), Quaternion.identity, 0);
+                PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 20.5f, 0f), Quaternion.identity, 0);
             }
             if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
@@ -52,6 +58,24 @@ namespace TB.Battles
                     Destroy(view.gameObject);
                 }
             };
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyItem] = (values) => 
+            {
+                int viewID = global::System.Convert.ToInt32(values[0]);
+                var view = PhotonView.Find(viewID);
+                if (view)
+                {
+                    Destroy(view.gameObject);
+                }
+            };
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.DestroyDigger] = (values) => 
+            {
+                int viewID = global::System.Convert.ToInt32(values[0]);
+                var view = PhotonView.Find(viewID);
+                if (view)
+                {
+                    Destroy(view.gameObject);
+                }
+            };
         }
 
         public void DestroyBlock(Block block)
@@ -60,9 +84,31 @@ namespace TB.Battles
                                                            block.GetComponent<PhotonView>().viewID);
         }
 
+        public void DestroyItem(Item item)
+        {
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyItem,
+                                                           item.GetComponent<PhotonView>().viewID);
+        }
+
+        public void DestroyDigger(Bomber digger)
+        {
+            SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.DestroyDigger,
+                                                           digger.GetComponent<PhotonView>().viewID);
+        }
+
         public void SetAirGaugeValue(float v)
         {
             _airGauge.SetValue(v);
+        }
+
+        public void ShakeCamera(float amount, float duration)
+        {
+            iTween.ShakePosition(_cameraController, Vector3.one * amount, duration);
+        }
+
+        public void TryOver(ResultType result)
+        {
+            _result.TrySet(result);
         }
     }
 }

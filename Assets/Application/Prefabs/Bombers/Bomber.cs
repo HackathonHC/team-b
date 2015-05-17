@@ -69,12 +69,13 @@ namespace TB.Battles
             {
                 return;
             }
+
+            Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
+
             if (State == StateType.Digging)
             {
                 return;
             }
-
-            Battle.Instance.SetAirGaugeValue(_remainingAir.Value / AirMax);
 
             var horizontalMove = Input.GetAxis("Horizontal");
             if (Mathf.Abs(horizontalMove) > 0.01f)
@@ -120,16 +121,18 @@ namespace TB.Battles
                         var block = col.GetComponent<Block>();
                         if (block.Type != BlockType.Wall)
                         {
-                            StartCoroutine(DestroyBlockCoroutine(block));
+                            StartCoroutine(DestroyBlockCoroutine(blaster.position, block));
                         }
                     }
                 }
             }
         }
 
-        IEnumerator DestroyBlockCoroutine(Block target)
+        IEnumerator DestroyBlockCoroutine(Vector3 effectPosition, Block target)
         {
             State = StateType.Digging;
+            Resource.Instance.CreateSparksEffect(effectPosition);
+            Battle.Instance.ShakeCamera(0.1f, DestroyBlockDelay);
             yield return new WaitForSeconds(DestroyBlockDelay);
 
             State = StateType.Active;
@@ -143,11 +146,12 @@ namespace TB.Battles
                 yield break;
             }
 
-            Resource.Instance.CreateDestroyBlockEffect(_bottomBlaster.position);
+            Resource.Instance.CreateDestroyBlockEffect(effectPosition);
             target.Life -= 1;
             if (target.Life <= 0)
             {
                 Battle.Instance.DestroyBlock(target);
+                Battle.Instance.ShakeCamera(0.25f, 0.5f);
             }
         }
 
@@ -156,8 +160,17 @@ namespace TB.Battles
             var trigger = col.collider.GetComponent<BlockAttackTrigger>();
             if (trigger && trigger.Attacking)
             {
-                // death
-                Debug.Log("digger died!");
+                Battle.Instance.TryOver(ResultType.TetrisWin);
+            }
+        }
+
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            var item = col.GetComponent<Item>();
+            if (item)
+            {
+                Battle.Instance.DestroyItem(item);
+                _remainingAir.Value = AirMax;
             }
         }
     }

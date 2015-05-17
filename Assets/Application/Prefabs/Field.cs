@@ -41,12 +41,20 @@ namespace TB.Battles
                 var blockExistences = GenerateBlockExisteces(width);
                 for(int j = 1; j <= width; j++)
                 {
+                    var place = new Point2(j, i);
                     if (blockExistences[j - 1])
                     {
-                        var place = new Point2(j, i);
                         if(IsEmpty(place))
                         {
                             CreateBlockAt(place, Consts.BlockSelector.Select());
+                        }
+                    }
+                    else
+                    {
+                        if (Random.Range(0, 10) == 0)
+                        {
+                            var position = ComputePosition(place);
+                            Item.Create(position);
                         }
                     }
                 }
