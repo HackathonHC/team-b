@@ -77,6 +77,7 @@ GameObject:
   - 114: {fileID: 11414200}
   - 114: {fileID: 11432200}
   - 114: {fileID: 11411186}
+  - 95: {fileID: 9530712}
   m_Layer: 9
   m_Name: Bomber
   m_TagString: Untagged
@@ -258,6 +259,23 @@ BoxCollider2D:
   m_Offset: {x: .00424814224, y: .0849617124}
   serializedVersion: 2
   m_Size: {x: .62616837, y: .66015327}
+--- !u!95 &9530712
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 47739bafa922f4dc1adf76d9a2a7e73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11411186
 MonoBehaviour:
   m_ObjectHideFlags: 1
