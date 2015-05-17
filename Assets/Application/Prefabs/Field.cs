@@ -204,7 +204,7 @@ namespace TB.Battles
         {
             get
             {
-                return ComputePosition(new Point2(Width / 2 + 1, TopSpaceHeight));
+                return ComputePosition(new Point2(Width / 2 + 1, TopSpaceHeight)) - new Vector3(0.5f, 0, 0);
             }
         }
 
