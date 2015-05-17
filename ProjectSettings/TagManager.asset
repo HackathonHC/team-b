@@ -44,3 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Bomber
+    uniqueID: 1011122861
+    locked: 0
+  - name: Effect
+    uniqueID: 3684113999
+    locked: 0

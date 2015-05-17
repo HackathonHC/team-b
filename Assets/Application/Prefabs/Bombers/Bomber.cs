@@ -28,6 +28,15 @@ namespace TB.Battles
                 return _bomberFoot ?? (_bomberFoot = GetComponentInChildren<BomberFoot>());
             }
         }
+        
+        Animator _animator;
+        Animator Animator
+        {
+            get
+            {
+                return _animator ?? (_animator = GetComponent<Animator>());
+            }
+        }
 
         const float Velocity = 1f;
         const float DestroyBlockDelay = 1f;
@@ -45,6 +54,8 @@ namespace TB.Battles
 
         const float AirMax = 30f;
 
+        string _animatonName;
+
         Air _remainingAir = new Air();
 
         static Bomber _instance;
@@ -60,6 +71,13 @@ namespace TB.Battles
         {
             State = StateType.Active;
             _remainingAir.Value = AirMax;
+
+            SLA.PhotonMessageManager.Instance.OnReceivedEvents[(int)PhotonEvent.PlayBomberAnimation] = (values) =>
+            {
+                var name = global::System.Convert.ToString(values[0]);
+                _animatonName = name;
+                Animator.Play(_animatonName, 0, 0f);
+            };
         }
 
         void Update()
@@ -78,17 +96,26 @@ namespace TB.Battles
             }
 
             var horizontalMove = Input.GetAxis("Horizontal");
+            float moveAngle = 0f;
             if (Mathf.Abs(horizontalMove) > 0.01f)
             {
+                moveAngle = Mathf.Sign(horizontalMove);
                 float force = (_remainingAir.Value > 0f) ? 30f : 15f;
-                Rigidbody2D.AddForce(new Vector2(Mathf.Sign(horizontalMove), 0f) * force * Time.deltaTime, ForceMode2D.Impulse);
+                Rigidbody2D.AddForce(new Vector2(moveAngle, 0f) * force * Time.deltaTime, ForceMode2D.Impulse);
             }
-            if (horizontalMove > 0.1f)
+            else
             {
+                PlayMotion("Idle");
+            }
+
+            if (moveAngle > 0.1f)
+            {
+                PlayMotion("WalkRight");
                 _flipper.localScale = new Vector3(-1f, _flipper.localScale.y, _flipper.localScale.z);
             }
-            if (horizontalMove < -0.1f)
+            if (moveAngle < -0.1f)
             {
+                PlayMotion("WalkLeft");
                 _flipper.localScale = new Vector3(1f, _flipper.localScale.y, _flipper.localScale.z);
             }
 
@@ -105,14 +132,17 @@ namespace TB.Battles
                 if (BomberFoot.IsLanding)
                 {
                     Transform blaster;
+                    string animationName;
 
                     if (Input.GetKey(KeyCode.DownArrow))
                     {
                         blaster = _bottomBlaster;
+                        animationName = "Dig";
                     }
                     else
                     {
                         blaster = _blaster;
+                        animationName = (_blaster.position.x > this.transform.position.x) ? "DigRight" : "DigLeft";
                     }
 
                     var col = Physics2D.OverlapPoint(blaster.position, 1 << Consts.BlockLayer);
@@ -121,6 +151,7 @@ namespace TB.Battles
                         var block = col.GetComponent<Block>();
                         if (block.Type != BlockType.Wall)
                         {
+                            PlayMotion(animationName);
                             StartCoroutine(DestroyBlockCoroutine(blaster.position, block));
                         }
                     }
@@ -137,6 +168,7 @@ namespace TB.Battles
 
             State = StateType.Active;
 
+            PlayMotion("Idle");
             if (target.Type == BlockType.Wall)
             {
                 yield break;
@@ -161,6 +193,7 @@ namespace TB.Battles
             if (trigger && trigger.Attacking)
             {
                 Battle.Instance.TryOver(ResultType.TetrisWin);
+                PlayMotion("Dead");
             }
         }
 
@@ -170,6 +203,14 @@ namespace TB.Battles
             {
                 Battle.Instance.DestroyItem(col.gameObject.GetComponent<Item>());
                 _remainingAir.Value = AirMax;
+            }
+        }
+
+        public void PlayMotion(string name)
+        {
+            if (_animatonName != name)
+            {
+                SLA.PhotonMessageManager.Instance.ServeQueueTo(PhotonTargets.All, (int)PhotonEvent.PlayBomberAnimation, name);
             }
         }
     }
