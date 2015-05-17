@@ -39,7 +39,7 @@ namespace TB.Battles
             if (GameData.Instance.playerType == PlayerType.Digger || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
                 // FIXME: magic number position
-                PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 25.5f, 0f), Quaternion.identity, 0);
+                PhotonNetwork.Instantiate("PhotonViews/Bomber", new Vector3(0.5f, 20.5f, 0f), Quaternion.identity, 0);
             }
             if (GameData.Instance.playerType == PlayerType.Tetris || (Consts.Standalone && PhotonNetwork.offlineMode))
             {
