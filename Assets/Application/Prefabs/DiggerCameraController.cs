@@ -18,10 +18,14 @@ namespace TB.Battles
 
         void LateUpdate()
         {
-            float y = Bomber.Instance.transform.position.y + Offset;
-            if (transform.localPosition.y > y)
+            var bomber = Bomber.Instance;
+            if (bomber)
             {
-                transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+                float y = bomber.transform.position.y + Offset;
+                if (transform.localPosition.y > y)
+                {
+                    transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+                }
             }
         }
     }
