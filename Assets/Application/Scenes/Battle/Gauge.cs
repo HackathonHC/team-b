@@ -14,10 +14,20 @@ namespace TB.Battles
             }
         }
 
+        [SerializeField]
+        UnityEngine.RectTransform _mask;
+
+        float _width = 0f;
 
         public void SetValue(float value)
         {
-            ValueObject.localScale = new Vector3(Mathf.Clamp01(value), ValueObject.transform.localScale.y, ValueObject.transform.localScale.z);
+            if (_width == 0f)
+            {
+                var corners = new Vector3[4];
+                _mask.GetLocalCorners(corners);
+                _width = corners[2].x - corners[0].x;
+            }
+            _mask.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, value * _width);
         }
     }
 }
