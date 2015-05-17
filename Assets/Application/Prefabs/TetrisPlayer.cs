@@ -8,7 +8,7 @@ namespace TB.Battles
 {
     public class TetrisPlayer : MonoBehaviour
     {
-        static readonly float moveDelay = 0.1f;
+        static readonly float moveDelay = 0.07f;
         static readonly int createBlockOffset = 5;
 
         static TetrisPlayer _instance;
@@ -178,6 +178,22 @@ namespace TB.Battles
             Invoke("CreateNewBlockOrGameOver", 0.1f);
         }
 
+        void DropDown()
+        {
+            while(true)
+            {
+                if(CanGoDown())
+                {
+                    GoDown();
+                }
+                else
+                {
+                    SettleDown();
+                    break;
+                }
+            }
+        }
+
         void RemoveBlocks(List<Block> blocks)
         {
             var removedRowHeights = new List<int>();
@@ -286,7 +302,12 @@ namespace TB.Battles
             }
             else
             {
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if(Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    DropDown();
+                    return;
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
                 {
                     if(CanGoLeft())
                     {
