@@ -105,7 +105,7 @@ namespace TB.Battles
                     if(definistion[i * Size + j] == 1)
                     {
                         var place = new Point2(j, i);
-                        var block = InstantiateNormalBlock().GetComponent<Block>();
+                        var block = InstantiateTetrisBlock().GetComponent<Block>();
                         block.transform.parent = this.transform;
                         block.transform.localPosition = ComputePosition(place);
                         block.transform.localScale = Vector3.one;
@@ -120,9 +120,9 @@ namespace TB.Battles
             }
         }
 
-        static GameObject InstantiateNormalBlock()
+        static GameObject InstantiateTetrisBlock()
         {
-            return PhotonNetwork.Instantiate("PhotonViews/Blocks/NormalBlock", Vector3.zero, Quaternion.identity, 0);
+            return PhotonNetwork.Instantiate("PhotonViews/Blocks/TetrisBlock", Vector3.zero, Quaternion.identity, 0);
         }
 
         public Point2 PivotPlace()
