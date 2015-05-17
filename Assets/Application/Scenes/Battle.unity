@@ -806,7 +806,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1127493588}
   - 20: {fileID: 1127493587}
-  - 114: {fileID: 1127493589}
   m_Layer: 0
   m_Name: Sub Camera
   m_TagString: MainCamera
@@ -820,14 +819,14 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1127493586}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 3
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .0399999991
-    y: 0
+    x: .810000002
+    y: -.150000006
     width: .180000007
     height: 1
   near clip plane: .300000012
@@ -858,18 +857,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1187908335}
   m_RootOrder: 1
---- !u!114 &1127493589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1127493586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d59f6dac406754846b4272896319e364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 1127493587}
 --- !u!1 &1185156047
 GameObject:
   m_ObjectHideFlags: 0
